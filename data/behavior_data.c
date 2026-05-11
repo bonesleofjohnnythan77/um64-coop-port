@@ -48,6 +48,18 @@ ADD_INT(oFaceAngleYaw,256),
 END_LOOP(),
 };
 
+const BehaviorScript bhvWaterLevelDiamond[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvWaterLevelDiamond),
+OR_INT(oFlags,1),
+SET_HITBOX(70,30),
+SET_FLOAT(oCollisionDistance,200),
+SET_INT(oIntangibleTimer,0),
+BEGIN_LOOP(),
+CALL_NATIVE( coin_spawner_update),
+END_LOOP(),
+};
+
 const BehaviorScript bhvExclamationBox[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvExclamationBox),
