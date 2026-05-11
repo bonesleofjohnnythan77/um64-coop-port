@@ -53,7 +53,7 @@ if exclamation then
     obj_mark_for_deletion(exclamation)
 end
 
-cur_obj_scale(2.75)
+obj_scale(o, 2.75)
 
 end
 

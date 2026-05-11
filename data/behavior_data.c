@@ -47,3 +47,17 @@ CALL_NATIVE( bhv_1up_loop),
 ADD_INT(oFaceAngleYaw,256),
 END_LOOP(),
 };
+
+const BehaviorScript bhvExclamationBox[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvExclamationBox),
+OR_INT(oFlags,9),
+LOAD_COLLISION_DATA(col_exclamation_box_geo_0x8025f78),
+OR_INT(oFlags,1),
+SCALE(575),
+SET_FLOAT(oCollisionDistance,300),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_exclamation_box_loop),
+END_LOOP(),
+};
