@@ -2,6 +2,8 @@
 
 E_MODEL_BRICK_BLOCK = smlua_model_util_get_id("brick_block_geo")
 COL_BRICK_BLOCK = smlua_collision_util_get("brick_block_collision")
+E_MODEL_MESSAGE_BOX = smlua_model_util_get_id("message_box_geo")
+
 
 --get star count
 function get_star_count() 

@@ -73,3 +73,16 @@ BEGIN_LOOP(),
 CALL_NATIVE( bhv_exclamation_box_loop),
 END_LOOP(),
 };
+
+const BehaviorScript bhvInSunkenShip3[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvInSunkenShip3),
+OR_INT(oFlags,1),
+SET_HITBOX(86,30),
+SET_FLOAT(oCollisionDistance,200),
+SET_INT(oIntangibleTimer,0),
+BEGIN_LOOP(),
+ADD_INT(oAnimState,1),
+CALL_NATIVE( message_block_init),
+END_LOOP(),
+};

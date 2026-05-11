@@ -79,6 +79,19 @@ function coin_spawner_update(o)
     end
 end
 
+--message block
+function message_block_init(o)
+    local m = gMarioStates[0]
+    local collide = obj_check_if_collided_with_object(o, m.marioObj)
+    if not m then return end
+    
+    if collide ~= 0 then
+        create_dialog_box(o.oBehParams2ndByte)
+    end
+    obj_set_model_extended(o, E_MODEL_MESSAGE_BOX)
+
+end
+
 hook_event(HOOK_UPDATE, function()
 
     for_each_object_with_behavior(id_bhvExclamationBox, exclamation_box_new)
