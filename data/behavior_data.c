@@ -69,7 +69,7 @@ OR_INT(oFlags,1),
 SET_FLOAT(oCollisionDistance,300),
 SET_HOME(),
 BEGIN_LOOP(),
-CALL_NATIVE( exclamation_box_new),
+CALL_NATIVE(exclamation_box_new),
 END_LOOP(),
 };
 

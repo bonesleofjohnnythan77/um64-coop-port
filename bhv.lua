@@ -79,7 +79,7 @@ if exclamation then
 end
 
 cur_obj_scale(2.75)
-bhv_exclamation_box_loop()
+CUR_OBJ_CALL_ACTION_FUNCTION(sExclamationBoxActions)
 
 end
 
