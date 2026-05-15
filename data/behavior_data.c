@@ -66,11 +66,10 @@ ID(id_bhvExclamationBox),
 OR_INT(oFlags,9),
 LOAD_COLLISION_DATA(col_exclamation_box_geo_0x8025f78),
 OR_INT(oFlags,1),
-SCALE(575),
 SET_FLOAT(oCollisionDistance,300),
 SET_HOME(),
 BEGIN_LOOP(),
-CALL_NATIVE( bhv_exclamation_box_loop),
+CALL_NATIVE( exclamation_box_new),
 END_LOOP(),
 };
 
@@ -84,5 +83,41 @@ SET_INT(oIntangibleTimer,0),
 BEGIN_LOOP(),
 ADD_INT(oAnimState,1),
 CALL_NATIVE( message_block_init),
+END_LOOP(),
+};
+
+const BehaviorScript bhvWfRotatingWoodenPlatform[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvWfRotatingWoodenPlatform),
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(wc_platform_collision),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_wf_rotating_wooden_platform_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript bhvGiantPole[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvGiantPole),
+OR_INT(oUnk94,3),
+SET_HOME(),
+LOAD_COLLISION_DATA(noteblock_collision),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802c2b4c),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript Bhv_Custom_0x0403c72c[] = {
+BEGIN(OBJ_LIST_PUSHABLE),
+ID(id_bhvNewId),
+OR_INT(oFlags,8265),
+LOAD_ANIMATIONS(oAnimations,flyguy_seg8_anims_08011A64),
+SET_HOME(),
+SET_OBJ_PHYSICS(40,65136,65486,1000,1000,0,0,0),
+CALL_NATIVE( bhv_goomba_init),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_goomba_update),
 END_LOOP(),
 };

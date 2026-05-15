@@ -1,10 +1,12 @@
 --Useful romhack functions and important globals
 
 E_MODEL_BRICK_BLOCK = smlua_model_util_get_id("brick_block_geo")
-COL_BRICK_BLOCK = smlua_collision_util_get("brick_block_collision")
+E_MODEL_BREAKABLE_BRICK = smlua_model_util_get_id("breakable_brick_geo")
 E_MODEL_MESSAGE_BOX = smlua_model_util_get_id("message_box_geo")
+E_MODEL_WC_PLATFORM = smlua_model_util_get_id("wc_platform_geo")
+E_MODEL_NOTEBLOCK = smlua_model_util_get_id("noteblock_geo")
 
-
+COL_BRICK_BLOCK = smlua_collision_util_get("brick_block_collision")
 --get star count
 function get_star_count() 
     return save_file_get_total_star_count(get_current_save_file_num() - 1, COURSE_MIN - 1, COURSE_MAX - 1)

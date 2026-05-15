@@ -53,7 +53,8 @@ if exclamation then
     obj_mark_for_deletion(exclamation)
 end
 
-obj_scale(o, 2.75)
+cur_obj_scale(2.75)
+bhv_exclamation_box_loop()
 
 end
 
@@ -92,9 +93,15 @@ function message_block_init(o)
 
 end
 
+
+--UM64 Noteblock
+
+function Func_Custom_0x802c2b4c(o)
+    
+end
+
 hook_event(HOOK_UPDATE, function()
 
-    for_each_object_with_behavior(id_bhvExclamationBox, exclamation_box_new)
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
     for_each_object_with_behavior(bhvKoopaRaceEndpoint, yoshi_star)
 
