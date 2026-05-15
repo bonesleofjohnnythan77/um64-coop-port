@@ -121,3 +121,44 @@ BEGIN_LOOP(),
 CALL_NATIVE( bhv_goomba_update),
 END_LOOP(),
 };
+
+const BehaviorScript bhvTowerDoor[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvTowerDoor),
+OR_INT(oUnk94,3),
+SET_HOME(),
+LOAD_COLLISION_DATA(wide_noteblock_collision),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802c2b4c),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript Bhv_Custom_0x13000f60[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvNewId),
+OR_INT(oFlags,1),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802bd1c0),
+END_LOOP(),
+};
+
+const BehaviorScript bhvBubbleMaybe[] = {
+    BEGIN(OBJ_LIST_UNIMPORTANT),
+    ID(id_bhvBubbleMaybe),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    BILLBOARD(),
+    CALL_NATIVE(bhv_water_bubble_init_new),
+    SET_RANDOM_FLOAT(oWaterObjUnkF4, /*Minimum*/ -75, /*Range*/ 150),
+    SET_RANDOM_FLOAT(oWaterObjUnkF8, /*Minimum*/ -75, /*Range*/ 150),
+    SET_RANDOM_FLOAT(oWaterObjUnkFC, /*Minimum*/ -75, /*Range*/ 150),
+    SUM_FLOAT(/*Dest*/ oPosX, /*Value 1*/ oPosX, /*Value 2*/ oWaterObjUnkF4),
+    SUM_FLOAT(/*Dest*/ oPosZ, /*Value 1*/ oPosZ, /*Value 2*/ oWaterObjUnkF8),
+    SUM_FLOAT(/*Dest*/ oPosY, /*Value 1*/ oPosY, /*Value 2*/ oWaterObjUnkFC),
+    SET_INT(oAnimState, -1),
+    BEGIN_REPEAT(60),
+        ADD_INT(oAnimState, 1),
+        CALL_NATIVE(bhv_bubble_maybe_loop),
+    END_REPEAT(),
+    DEACTIVATE(),
+};

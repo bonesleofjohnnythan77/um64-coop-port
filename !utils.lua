@@ -12,6 +12,10 @@ function get_star_count()
     return save_file_get_total_star_count(get_current_save_file_num() - 1, COURSE_MIN - 1, COURSE_MAX - 1)
 end
 
+function is_bubbled(m)
+    return m.action == ACT_BUBBLED
+end
+
 --despawn if stars are below/above count
 function despawn_if_stars_below_count(obj, count)
     if get_star_count() < count then

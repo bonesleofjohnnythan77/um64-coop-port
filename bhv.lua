@@ -39,9 +39,34 @@ if o.oTimer >= spawnInterval then
 
     spawn_non_sync_object(id_bhvTreeLeaf, E_MODEL_LEAVES, o.oPosX, o.oPosY, o.oPosZ, nil)
     o.oTimer = 0
+    cur_obj_become_intangible()
 end
 
 end
+
+--bubble spawner
+
+function Func_Custom_0x802bd1c0(o)
+     local spawnInterval = o.oBehParams2ndByte or 60
+
+    if o.oTimer == nil then
+        o.oTimer = 0
+    end
+
+    o.oTimer = o.oTimer + 1
+
+    if o.oTimer >= spawnInterval then
+        spawn_non_sync_object(id_bhvBubbleMaybe, E_MODEL_WHITE_PARTICLE_SMALL, o.oPosX, o.oPosY, o.oPosZ, nil)
+        o.oTimer = 0
+        cur_obj_become_intangible()
+    end   
+end
+
+function bhv_water_bubble_init_new(o)
+    o.oWaterObjUnkFC  = 0x800 + (math.random() * 2048)
+    o.oWaterObjUnk100 = 0x800 + (math.random() * 2048)
+end
+
 
 --exclamation block changes
 
@@ -97,8 +122,34 @@ end
 --UM64 Noteblock
 
 function Func_Custom_0x802c2b4c(o)
-    
+    local m = nearest_mario_state_to_object(o)
+    local strength = o.oBehParams2ndByte
+    local speed = 64
+
+    if cur_obj_is_mario_on_platform() == 1 and not is_bubbled(m) then
+
+        set_mario_action(m, ACT_DOUBLE_JUMP, 1)
+        m.vel.y = speed + 12
+
+
+        if (m.controller.buttonDown & A_BUTTON) ~= 0 then
+            spawn_non_sync_object(
+                id_bhvHorStarParticleSpawner,
+                E_MODEL_NONE,
+                m.pos.x, m.pos.y, m.pos.z,
+                nil
+            )
+            create_sound_spawner(SOUND_GENERAL_BOING1)
+            m.vel.y = speed + strength
+        end
+
+
+        
+    end    
+
+
 end
+
 
 hook_event(HOOK_UPDATE, function()
 
