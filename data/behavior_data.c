@@ -59,7 +59,7 @@ BEGIN_LOOP(),
 CALL_NATIVE( coin_spawner_update),
 END_LOOP(),
 };
-
+/*
 const BehaviorScript bhvExclamationBox[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvExclamationBox),
@@ -72,7 +72,7 @@ BEGIN_LOOP(),
 CALL_NATIVE(exclamation_box_new),
 END_LOOP(),
 };
-
+*/
 const BehaviorScript bhvInSunkenShip3[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvInSunkenShip3),

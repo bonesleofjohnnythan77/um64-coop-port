@@ -69,7 +69,19 @@ end
 
 
 --exclamation block changes
+local sExclamationBoxActions = {
+    [0] = 0,  -- Initialize
+    [1] = 1,  -- Idle
+    [2] = 2,  -- Bounce when Mario near
+    [3] = 3,  -- Pop open
+    [4] = 4,  -- Spawning content
+    [5] = 5,  -- Wait after popping
+    [6] = 6,  -- Cleanup/despawn
+}
 
+
+
+--[[
 function exclamation_box_new(o)
 
 local exclamation = obj_get_nearest_object_with_behavior_id(o, id_bhvRotatingExclamationMark)
@@ -78,11 +90,12 @@ if exclamation then
     obj_mark_for_deletion(exclamation)
 end
 
+
 cur_obj_scale(2.75)
-CUR_OBJ_CALL_ACTION_FUNCTION(sExclamationBoxActions)
+bhv_exclamation_box_loop()
 
 end
-
+]]--
 --coin spawner
 
 function coin_spawner_update(o)
