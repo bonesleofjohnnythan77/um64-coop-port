@@ -5,6 +5,7 @@ E_MODEL_BREAKABLE_BRICK = smlua_model_util_get_id("breakable_brick_geo")
 E_MODEL_MESSAGE_BOX = smlua_model_util_get_id("message_box_geo")
 E_MODEL_WC_PLATFORM = smlua_model_util_get_id("wc_platform_geo")
 E_MODEL_NOTEBLOCK = smlua_model_util_get_id("noteblock_geo")
+E_MODEL_CRYSTAL = smlua_model_util_get_id("crystal_geo")
 
 COL_BRICK_BLOCK = smlua_collision_util_get("brick_block_collision")
 --get star count
