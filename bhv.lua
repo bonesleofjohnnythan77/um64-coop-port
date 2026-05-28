@@ -71,6 +71,32 @@ function bhv_bowsers_sub_loop(o)
     --does nothing
 end
 
+--poundable crystal
+
+sBreakableBoxHitbox = {
+    interactType = INTERACT_BREAKABLE,
+    downOffset = 20,
+    damageOrCoinValue = 0,
+    health = 1,
+    numLootCoins = 0,
+    radius = 150,
+    height = 200,
+    hurtboxRadius = 150,
+    hurtboxHeight = 200,
+};
+
+function Func_Custom_0x802bc664(o)
+
+obj_set_hitbox(o, sBreakableBoxHitbox)
+obj_set_model_extended(o, E_MODEL_POUNDABLE_CRYSTAL)
+
+    if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+        obj_explode_and_spawn_coins(46, 1)
+        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)  -- 0x3041c081
+    end
+
+end
+
 --coin spawner
 
 function coin_spawner_update(o)

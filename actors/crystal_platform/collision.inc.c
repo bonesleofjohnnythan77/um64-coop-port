@@ -1,4 +1,4 @@
-const Collision col_unk_DL_04058dac_0x4059a94[] = {
+const Collision crystal_platform_collision[] = {
 COL_INIT(),
 COL_VERTEX_INIT(12),
 COL_VERTEX( -344, -177, 345),

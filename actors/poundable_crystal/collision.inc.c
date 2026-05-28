@@ -1,4 +1,4 @@
-const Collision col_unk_DL_040560ac_0x4056eb4[] = {
+const Collision poundable_crystal_collision[] = {
 COL_INIT(),
 COL_VERTEX_INIT(12),
 COL_VERTEX( -153, -282, 259),

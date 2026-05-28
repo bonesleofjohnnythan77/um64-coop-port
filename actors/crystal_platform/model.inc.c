@@ -1,4 +1,8 @@
 #include "custom.model.inc.h"
+ALIGNED8 u8 unk_DL_04058dac__texture_04058DDC[] = {
+#include "actors/crystal_platform/unk_DL_04058dac_0x4058ddc_custom.rgba16.inc.c"
+};
+
 Vtx VB_unk_DL_04058dac_0x4058fdc[] = {
 {{{ -296, -167, -296 }, 0, { 504, -8 }, { 229, 136, 229, 255}}},
 {{{ 296, -167, -296 }, 0, { 504, 504 }, { 27, 136, 229, 255}}},

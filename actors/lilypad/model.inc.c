@@ -1,4 +1,8 @@
 #include "custom.model.inc.h"
+ALIGNED8 u8 unk_DL_04054e6c__texture_04054E9C[] = {
+#include "actors/lilypad/unk_DL_04054e6c_0x4054e9c_custom.rgba16.inc.c"
+};
+
 Vtx VB_unk_DL_04054e6c_0x4055e9c[] = {
 {{{ 425, 0, 425 }, 0, { 903, 177 }, { 204, 204, 204, 255}}},
 {{{ 425, 0, -425 }, 0, { 903, 1806 }, { 255, 255, 255, 255}}},

@@ -1,4 +1,4 @@
-const Collision col_unk_DL_04054e6c_0x4056064[] = {
+const Collision lilypad_collision[] = {
 COL_INIT(),
 COL_VERTEX_INIT(8),
 COL_VERTEX( -425, 0, 425),

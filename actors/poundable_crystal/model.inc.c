@@ -1,4 +1,8 @@
 #include "custom.model.inc.h"
+ALIGNED8 u8 unk_DL_040560ac__texture_040560DC[] = {
+#include "actors/poundable_crystal/unk_DL_040560ac_0x40560dc_custom.rgba16.inc.c"
+};
+
 Vtx VB_unk_DL_040560ac_0x40562dc[] = {
 {{{ -189, -281, -189 }, 0, { -8, -8 }, { 0, 129, 0, 255}}},
 {{{ 189, -281, -189 }, 0, { -8, -8 }, { 0, 129, 0, 255}}},

@@ -152,6 +152,42 @@ CALL_NATIVE( bhv_bowsers_sub_loop),
 END_LOOP(),
 };
 
+const BehaviorScript Bhv_Custom_0x13000f78[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvNewId),
+OR_INT(oFlags,9),
+LOAD_COLLISION_DATA(lilypad_collision),
+SET_FLOAT(oYoshiChosenHome,64),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_floating_platform_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript bhvSquarishPathMoving[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvSquarishPathMoving),
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(crystal_platform_collision),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_squarish_path_moving_loop),
+END_LOOP(),
+};
+
+const BehaviorScript bhvLllWoodPiece[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvLllWoodPiece),
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(poundable_crystal_collision),
+CALL_NATIVE( bhv_init_room),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802bc664),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
 const BehaviorScript bhvBubbleMaybe[] = {
 BEGIN(OBJ_LIST_UNIMPORTANT),
 ID(id_bhvBubbleMaybe),
