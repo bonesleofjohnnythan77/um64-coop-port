@@ -185,6 +185,33 @@ CALL_NATIVE( bhv_new_openable_grill),
 END_LOOP(),
 };
 
+const BehaviorScript bhvSmallBomp[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvSmallBomp)
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(col_bubbly_tree_geo_0x302ea70),
+SCALE(0,200),
+CALL_NATIVE( bhv_init_room),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802c2ab4),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript bhvKickableBoard[] = {
+BEGIN(OBJ_LIST_LEVEL),
+ID(id_bhvKickableBoard),
+OR_INT(oFlags,1),
+SET_HITBOX(100,100),
+SET_INT(oIntangibleTimer,0),
+SET_MODEL(24),
+BEGIN_LOOP(),
+CALL_NATIVE( Func_Custom_0x802b2dac),
+CALL_NATIVE( bhv_yellow_coin_loop),
+ADD_INT(oUnk94,1280),
+END_LOOP(),
+};
+
 const BehaviorScript Bhv_Custom_0x13000f78[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvNewId),

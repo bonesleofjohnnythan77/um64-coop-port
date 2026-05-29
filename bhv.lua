@@ -76,12 +76,18 @@ function bhv_crystal_size_loop(o)
     o.header.gfx.scale.z = scale
 end
 
+--thought there was something else to this
+
 function bhv_new_openable_grill(o)
 
 bhv_openable_grill_loop()
 
 
 end
+
+
+
+
 
 --poundable crystal
 
@@ -97,15 +103,58 @@ sBreakableBoxHitbox = {
     hurtboxHeight = 200,
 };
 
+function breakable_box_init(o)
+    o.oHiddenObjectUnkF4 = nil
+    o.oAnimState = 1
+
+    local param = o.oBehParams2ndByte
+    if param == 0 then
+        o.oNumLootCoins = 0
+    elseif param == 1 then
+        o.oNumLootCoins = 3
+    elseif param == 2 then
+        o.oNumLootCoins = 5
+    elseif param == 3 then
+        cur_obj_scale(1.5)
+    end
+end
+
 function Func_Custom_0x802bc664(o)
 
 obj_set_hitbox(o, sBreakableBoxHitbox)
 obj_set_model_extended(o, E_MODEL_POUNDABLE_CRYSTAL)
 
+if o.oTimer == 0 then
+    breakable_box_init(o)
+end
+
     if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
         obj_explode_and_spawn_coins(46, 1)
         create_sound_spawner(SOUND_GENERAL_BREAK_BOX)  -- 0x3041c081
     end
+
+end
+
+--metal cap only box
+
+
+
+function Func_Custom_0x802c2ab4(o)
+
+obj_set_hitbox(o, sBreakableBoxHitbox)
+obj_set_model_extended(o, E_MODEL_BUBBLY_TREE)
+local m = nearest_mario_state_to_object(o)
+
+if o.oTimer == 0 then
+    breakable_box_init(o)
+end
+
+if m.flags & MARIO_METAL_CAP ~= 0 then
+    if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+        obj_explode_and_spawn_coins(46, 1)
+        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)  -- 0x3041c081
+    end
+end
 
 end
 
@@ -144,6 +193,25 @@ function message_block_init(o)
 
 end
 
+--UM64 Silver Star
+
+function Func_Custom_0x802b2dac(o)
+    local m = nearest_mario_state_to_object(o)
+    o.oFaceAngleYaw = o.oFaceAngleYaw + 0x800
+    
+
+    if o.oTimer > 90 or (o.oMoveFlags & 1) ~= 0 then
+        cur_obj_become_tangible()
+
+        if obj_check_if_collided_with_object(o, m.marioObj) ~= 0 then
+            
+
+            obj_mark_for_deletion(o)
+            spawn_non_sync_object(id_bhvGoldenCoinSparkles, E_MODEL_NONE, o.oPosX, o.oPosY, o.oPosZ, nil)
+        end
+    end
+    
+end
 
 --UM64 Noteblock
 

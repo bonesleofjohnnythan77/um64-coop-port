@@ -1,5 +1,15 @@
 #include "custom.model.inc.h"
-Vtx VB_snow_tree_geo_0x302b6f0[] = {
+ALIGNED8 u8 bubbly_tree_geo__texture_0302DE38[] = {
+#include "actors/extraobjs/bubbly_tree_geo_0x302de38_custom.rgba16.inc.c"
+};
+ALIGNED8 u8 spiky_tree_geo__texture_0302FF60[] = {
+#include "actors/extraobjs/spiky_tree_geo_0x302ff60_custom.rgba16.inc.c"
+};
+ALIGNED8 u8 spiky_tree_geo__texture_0302AEF0[] = {
+#include "actors/extraobjs/spiky_tree_geo_0x302aef0_custom.rgba16.inc.c"
+};
+
+Vtx VB_spiky_tree_geo_0x302b6f0[] = {
 {{{ 0, 8, -89 }, 0, { 0, 0 }, { 0, 7, 130, 255}}},
 {{{ 190, -201, 0 }, 0, { 0, 0 }, { 85, 163, 0, 255}}},
 {{{ 0, -129, 0 }, 0, { 0, 0 }, { 0, 130, 0, 255}}},
@@ -14,7 +24,7 @@ Vtx VB_snow_tree_geo_0x302b6f0[] = {
 {{{ -95, 99, 0 }, 0, { 0, 0 }, { 195, 111, 0, 255}}},
 };
 
-Vtx VB_snow_tree_geo_0x302b920[] = {
+Vtx VB_spiky_tree_geo_0x302b920[] = {
 {{{ 67, 86, 63 }, 0, { 990, 0 }, { 24, 21, 122, 255}}},
 {{{ 0, -27, 96 }, 0, { 0, 990 }, { 24, 21, 122, 255}}},
 {{{ 67, -29, 83 }, 0, { 990, 990 }, { 24, 21, 122, 255}}},
@@ -27,7 +37,7 @@ Vtx VB_snow_tree_geo_0x302b920[] = {
 {{{ -66, -29, 83 }, 0, { 0, 990 }, { 231, 21, 122, 255}}},
 };
 
-Vtx VB_snow_tree_geo_0x302e678[] = {
+Vtx VB_bubbly_tree_geo_0x302e678[] = {
 {{{ -101, 0, -101 }, 0, { -3088, -16 }, { 129, 0, 0, 255}}},
 {{{ -101, 0, 101 }, 0, { -2064, -16 }, { 129, 0, 0, 255}}},
 {{{ -101, 202, -101 }, 0, { -3088, 1008 }, { 129, 0, 0, 255}}},
@@ -45,7 +55,7 @@ Vtx VB_snow_tree_geo_0x302e678[] = {
 {{{ -101, 0, 101 }, 0, { -3088, -16 }, { 0, 0, 127, 255}}},
 };
 
-Vtx VB_snow_tree_geo_0x302e768[] = {
+Vtx VB_bubbly_tree_geo_0x302e768[] = {
 {{{ 101, 202, 101 }, 0, { -2064, 1008 }, { 0, 0, 127, 255}}},
 {{{ -101, 202, 101 }, 0, { -3088, 1008 }, { 0, 0, 127, 255}}},
 {{{ 101, 0, 101 }, 0, { -2064, -16 }, { 0, 0, 127, 255}}},
@@ -63,7 +73,7 @@ Vtx VB_snow_tree_geo_0x302e768[] = {
 {{{ -101, 0, -101 }, 0, { -2064, 1008 }, { 0, 129, 0, 255}}},
 };
 
-Vtx VB_snow_tree_geo_0x302e858[] = {
+Vtx VB_bubbly_tree_geo_0x302e858[] = {
 {{{ 101, 0, -101 }, 0, { -2064, -16 }, { 127, 0, 0, 255}}},
 {{{ 101, 202, 101 }, 0, { -3088, 1008 }, { 127, 0, 0, 255}}},
 {{{ 101, 0, 101 }, 0, { -3088, -16 }, { 127, 0, 0, 255}}},
@@ -96,8 +106,8 @@ gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0
 gsSPTexture(65535, 65535, 0, 0, 1),
 gsDPTileSync(),
 gsDPLoadSync(),
-gsSPLight(&Light_bubbly_tree_geo_0x302de28.col, 1),
-gsSPLight(&Light_bubbly_tree_geo_0x302de30.col, 2),
+gsSPLight(Light_bubbly_tree_geo_0x302de28, 1),
+gsSPLight(Light_bubbly_tree_geo_0x302de30, 2),
 gsDPSetTextureImage(0, 2, 1, bubbly_tree_geo__texture_0302DE38),
 gsDPSetTile(0, 2, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0),
 gsDPLoadSync(),
@@ -154,8 +164,8 @@ gsSPEndDisplayList(),
 };
 
 Gfx DL_spiky_tree_geo_0x302b7b0[] = {
-gsSPLight(&Light_spiky_tree_geo_0x302a6e0.col, 1),
-gsSPLight(&Light_spiky_tree_geo_0x302a6d8.col, 2),
+gsSPLight(Light_spiky_tree_geo_0x302a6e0, 1),
+gsSPLight(Light_spiky_tree_geo_0x302a6d8, 2),
 gsSPVertex(VB_spiky_tree_geo_0x302b6f0, 12, 0),
 gsSP2Triangles(0, 1, 2, 0,0, 3, 1, 0),
 gsSP2Triangles(2, 1, 4, 0,1, 3, 4, 0),
@@ -199,8 +209,8 @@ Gfx DL_spiky_tree_geo_0x302b9c0[] = {
 gsDPSetTextureImage(0, 2, 1, spiky_tree_geo__texture_0302AEF0),
 gsDPLoadSync(),
 gsDPLoadBlock(7, 0, 0, 1023, 256),
-gsSPLight(&Light_spiky_tree_geo_0x302b910.col, 1),
-gsSPLight(&Light_spiky_tree_geo_0x302b908.col, 2),
+gsSPLight(Light_spiky_tree_geo_0x302b910, 1),
+gsSPLight(Light_spiky_tree_geo_0x302b908, 2),
 gsSPVertex(VB_spiky_tree_geo_0x302b920, 10, 0),
 gsSP2Triangles(0, 1, 2, 0,0, 3, 1, 0),
 gsSP2Triangles(4, 5, 6, 0,7, 8, 9, 0),
@@ -230,8 +240,8 @@ gsSPEndDisplayList(),
 };
 
 Gfx DL_snow_tree_geo_0x302b7b0[] = {
-gsSPLight(&Light_bubbly_tree_geo_0x302a6e0.col, 1),
-gsSPLight(&Light_bubbly_tree_geo_0x302a6d8.col, 2),
+gsSPLight(Light_bubbly_tree_geo_0x302a6e0, 1),
+gsSPLight(Light_bubbly_tree_geo_0x302a6d8, 2),
 gsSPVertex(VB_snow_tree_geo_0x302b6f0, 12, 0),
 gsSP2Triangles(0, 1, 2, 0,0, 3, 1, 0),
 gsSP2Triangles(2, 1, 4, 0,1, 3, 4, 0),
@@ -267,8 +277,8 @@ Gfx DL_snow_tree_geo_0x302b9c0[] = {
 gsDPSetTextureImage(0, 2, 1, spiky_tree_geo__texture_0302AEF0),
 gsDPLoadSync(),
 gsDPLoadBlock(7, 0, 0, 1023, 256),
-gsSPLight(&Light_spiky_tree_geo_0x302b910.col, 1),
-gsSPLight(&Light_spiky_tree_geo_0x302b908.col, 2),
+gsSPLight(Light_spiky_tree_geo_0x302b910, 1),
+gsSPLight(Light_spiky_tree_geo_0x302b908, 2),
 gsSPVertex(VB_snow_tree_geo_0x302b920, 10, 0),
 gsSP2Triangles(0, 1, 2, 0,0, 3, 1, 0),
 gsSP2Triangles(4, 5, 6, 0,7, 8, 9, 0),
