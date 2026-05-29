@@ -67,8 +67,20 @@ function bhv_water_bubble_init_new(o)
     o.oWaterObjUnk100 = 0x800 + (math.random() * 2048)
 end
 
-function bhv_bowsers_sub_loop(o)
-    --does nothing
+--crystals
+
+function bhv_crystal_size_loop(o)
+    local scale = (o.oBehParams2ndByte * 0.0099487305) + 0.25   
+    o.header.gfx.scale.x = scale
+    o.header.gfx.scale.y = scale
+    o.header.gfx.scale.z = scale
+end
+
+function bhv_new_openable_grill(o)
+
+bhv_openable_grill_loop()
+
+
 end
 
 --poundable crystal

@@ -148,7 +148,40 @@ BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvUkikiCage),
 OR_INT(oFlags,1),
 BEGIN_LOOP(),
-CALL_NATIVE( bhv_bowsers_sub_loop),
+CALL_NATIVE( bhv_crystal_size_loop),
+END_LOOP(),
+};
+
+const BehaviorScript bhvBowserSubDoor[] = {
+BEGIN(OBJ_LIST_LEVEL),
+ID(id_bhvBowserSubDoor)
+OR_INT(oFlags,1),
+LOAD_ANIMATIONS(oAnimations,seaweed_seg6_anims_0600A4D4),
+ANIMATE(0),
+CALL_NATIVE( bhv_seaweed_init),
+CALL_NATIVE( bhv_crystal_size_loop),
+BEGIN_LOOP(),
+END_LOOP(),
+};
+
+const BehaviorScript bhvTTCElevator[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvTTCElevator),
+OR_INT(oFlags,17),
+LOAD_COLLISION_DATA(dark_platform_collision),
+CALL_NATIVE( bhv_ssl_moving_pyramid_wall_init),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_ssl_moving_pyramid_wall_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript bhvOpenableGrill[] = {
+BEGIN(OBJ_LIST_DEFAULT),
+ID(id_bhvOpenableGrill),
+OR_INT(oFlags,9),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_new_openable_grill),
 END_LOOP(),
 };
 

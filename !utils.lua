@@ -72,3 +72,4 @@ function obj_set_hitbox(obj, hitbox)
     obj.hurtboxHeight = obj.header.gfx.scale.y * hitbox.hurtboxHeight
     obj.hitboxDownOffset = obj.header.gfx.scale.y * hitbox.downOffset
 end
+
