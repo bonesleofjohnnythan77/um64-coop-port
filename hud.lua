@@ -100,6 +100,22 @@ function render_coins_segment(x, y, scaleW, scaleH) -- Coins
     end
 end
 
+function render_red_coins_segment(x, y, scaleW, scaleH) -- Red Coins
+    local reds = count_objects_with_behavior(get_behavior_from_id(id_bhvRedCoin))
+    local total = 8 - reds
+    if appendZero then
+        redcoins = tostring(string.format("%02d", total)):gsub("-", "M")
+    else
+        redcoins = tostring(string.format(total)):gsub("-", "M")
+    end
+
+    if gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_GROUNDS and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_COURTYARD and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE then     -- Hides coin display in certain areas
+        djui_hud_render_texture(gTextures.lakitu, x, y, scaleW, scaleH) -- Red Coin texture
+        djui_hud_print_text("@", x + 16, y, scaleW) -- The X
+        djui_hud_print_text(redcoins, x + 30, y, scaleW)
+    end
+end
+
 function render_stars_segment(x, y, scaleW, scaleH) -- Stars
     if appendZero then
         stars = tostring(string.format("%02d", hud_get_value(HUD_DISPLAY_STARS))):gsub("-", "M")
@@ -266,7 +282,18 @@ function render_camera(x, y, scaleW, scaleH)
     end
 end
 
+--Silver Star Handling SPECIFIC TO UM64
 
+local function render_silver_stars(x, y, scaleW, scaleH)
+if obj_get_first_with_behavior_id(id_bhvKickableBoard) == nil then return end    
+local silver = gTextures.camera
+local stars = count_objects_with_behavior(get_behavior_from_id(id_bhvKickableBoard))
+
+for i = 0, 4 - stars do
+    djui_hud_render_texture(silver, x + 20 * i, y, scaleW, scaleH)
+end    
+
+end
 
 -- This section actually renders out the HUD layouts
 -- If you want to change the placement of the power meter, coin/star/life counters, camera icon, and timer, do it here
@@ -292,6 +319,8 @@ local function on_hud_render() -- Handles the HUD layouts
         render_lives_segment(22, 210, 1, 1) -- Lives Segment positioning
         render_coins_segment(screenWidth - 76, 210, 1, 1) -- Coins Segment positioning
         render_stars_segment(22, 15, 1, 1) -- Stars Segment positioning
+        render_silver_stars(200, 15, 1, 1) -- Silver Stars positioning
+        render_red_coins_segment(screenWidth - 170, 210, 1, 1)
         render_power_meter(halfScreenWidth - 51, 9, 65, 65) -- scale 65 for default power meter, though you might need to change it to a scale of 1 for custom textures
         --render_cap_timer(math.ceil(gMarioStates[0].capTimer/30), 22, 35) -- Cap Timer positioning
         if newTimer then
@@ -303,8 +332,20 @@ local function on_hud_render() -- Handles the HUD layouts
     end
 end
 
-hook_event(HOOK_ON_HUD_RENDER_BEHIND, on_hud_render)
+local function on_not_hud_render()
+    if not custom_hud then
+    if obj_get_first_with_behavior_id(id_bhvActSelector) ~= nil then return end  -- Hides HUD during star select
+    if gNetworkPlayers[0].currActNum == 99 then return end  -- Hides HUD during Act 99, aka the credits
+    djui_hud_set_resolution(RESOLUTION_N64)  -- Sets resolution to N64
+    djui_hud_set_color(255, 255, 255, 255)
+    render_silver_stars(22, 210, 1, 1)
+    end
+    
+end
 
+
+hook_event(HOOK_ON_HUD_RENDER_BEHIND, on_hud_render)
+hook_event(HOOK_ON_HUD_RENDER_BEHIND, on_not_hud_render)
 
 
 -- Chat commands

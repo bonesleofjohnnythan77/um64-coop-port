@@ -149,6 +149,12 @@ if o.oTimer == 0 then
     breakable_box_init(o)
 end
 
+if m.flags & MARIO_METAL_CAP == 0 then
+    if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+        o.oHealth = 1
+    end
+end
+
 if m.flags & MARIO_METAL_CAP ~= 0 then
     if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
         obj_explode_and_spawn_coins(46, 1)
