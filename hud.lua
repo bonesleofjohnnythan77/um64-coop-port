@@ -102,7 +102,7 @@ end
 
 function render_red_coins_segment(x, y, scaleW, scaleH) -- Red Coins
     local reds = count_objects_with_behavior(get_behavior_from_id(id_bhvRedCoin))
-    local total = 8 - reds
+    local total = gMarioStates[0].area.numRedCoins - reds
 
     if appendZero then
         redcoins = tostring(string.format("%02d", total)):gsub("-", "M")
@@ -111,7 +111,7 @@ function render_red_coins_segment(x, y, scaleW, scaleH) -- Red Coins
     end
 
     if gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_GROUNDS and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_COURTYARD and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE then 
-        if is_game_paused() and total > 0 then
+        if total > 0 then
         djui_hud_render_texture(gTextures.lakitu, x, y, scaleW, scaleH) -- Red Coin texture
         djui_hud_print_text("@", x + 16, y, scaleW) -- The X
         djui_hud_print_text(redcoins, x + 30, y, scaleW)
