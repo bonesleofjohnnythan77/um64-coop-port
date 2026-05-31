@@ -103,16 +103,19 @@ end
 function render_red_coins_segment(x, y, scaleW, scaleH) -- Red Coins
     local reds = count_objects_with_behavior(get_behavior_from_id(id_bhvRedCoin))
     local total = 8 - reds
+
     if appendZero then
         redcoins = tostring(string.format("%02d", total)):gsub("-", "M")
     else
         redcoins = tostring(string.format(total)):gsub("-", "M")
     end
 
-    if gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_GROUNDS and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_COURTYARD and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE then     -- Hides coin display in certain areas
+    if gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_GROUNDS and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE_COURTYARD and gNetworkPlayers[0].currLevelNum ~= LEVEL_CASTLE then 
+        if is_game_paused() and total > 0 then
         djui_hud_render_texture(gTextures.lakitu, x, y, scaleW, scaleH) -- Red Coin texture
         djui_hud_print_text("@", x + 16, y, scaleW) -- The X
         djui_hud_print_text(redcoins, x + 30, y, scaleW)
+        end
     end
 end
 
@@ -332,16 +335,24 @@ local function on_hud_render() -- Handles the HUD layouts
     end
 end
 
+--I wanted to have the extra things on the base hud too
+
 local function on_not_hud_render()
+    if custom_hud then return end
     if not custom_hud then
     if obj_get_first_with_behavior_id(id_bhvActSelector) ~= nil then return end  -- Hides HUD during star select
     if gNetworkPlayers[0].currActNum == 99 then return end  -- Hides HUD during Act 99, aka the credits
-    djui_hud_set_resolution(RESOLUTION_N64)  -- Sets resolution to N64
+    djui_hud_set_resolution(RESOLUTION_N64) 
+    djui_hud_set_font(FONT_HUD)
+    screenWidth = djui_hud_get_screen_width()
     djui_hud_set_color(255, 255, 255, 255)
     render_silver_stars(22, 210, 1, 1)
+    render_red_coins_segment(screenWidth - 170, 210, 1, 1)
+    hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) & ~HUD_DISPLAY_FLAGS_CAMERA)
     end
     
 end
+
 
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, on_hud_render)
