@@ -93,6 +93,7 @@ sBreakableBoxHitbox = {
 function breakable_box_init(o)
     o.oHiddenObjectUnkF4 = nil
     o.oAnimState = 1
+    o.oHealth = 1
 
     local param = o.oBehParams2ndByte
     if param == 0 then
@@ -104,6 +105,7 @@ function breakable_box_init(o)
     elseif param == 3 then
         cur_obj_scale(1.5)
     end
+    network_init_object(o, false, {"oHealth"})
 end
 
 function Func_Custom_0x802bc664(o)
@@ -115,8 +117,13 @@ function Func_Custom_0x802bc664(o)
     end
 
     if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+        o.oHealth = 0
+        network_send_object(o, true)
+    end
+
+    if o.oHealth == 0 then
         obj_explode_and_spawn_coins(46, 1)
-        create_sound_spawner(SOUND_GENERAL_BREAK_BOX) -- 0x3041c081
+        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)     
     end
 end
 
@@ -136,14 +143,20 @@ function Func_Custom_0x802c2ab4(o)
     if m.flags & MARIO_METAL_CAP == 0 then
         if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
             o.oHealth = 1
+            network_send_object(o, true)
         end
     end
 
     if m.flags & MARIO_METAL_CAP ~= 0 then
         if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
-            obj_explode_and_spawn_coins(46, 1)
-            create_sound_spawner(SOUND_GENERAL_BREAK_BOX) -- 0x3041c081
+            o.oHealth = 0
+            network_send_object(o, true)
         end
+    end
+
+    if o.oHealth == 0 then
+        obj_explode_and_spawn_coins(46, 1)
+        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)         
     end
 end
 
