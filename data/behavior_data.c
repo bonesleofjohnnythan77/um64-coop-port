@@ -248,6 +248,29 @@ CALL_NATIVE( load_object_collision_model),
 END_LOOP(),
 };
 
+const BehaviorScript bhvChainChompGate[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvChainChompGate),
+LOAD_COLLISION_DATA(poundable_switch_blue_collision),
+OR_INT(oFlags,1),
+CALL_NATIVE( bhv_poundable_switch_init),
+BEGIN_LOOP(),
+CALL_NATIVE( load_object_collision_model),
+CALL_NATIVE( bhv_poundable_switch_loop),
+END_LOOP(),
+};
+
+const BehaviorScript bhvBulletBill[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvBulletBill),
+OR_INT(oFlags,1),
+SET_FLOAT(oCollisionDistance,4000),
+CALL_NATIVE( bhv_poundable_switch_starspawn_init),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_poundable_switch_starspawn_loop),
+END_LOOP(),
+};
+
 const BehaviorScript bhvBubbleMaybe[] = {
 BEGIN(OBJ_LIST_UNIMPORTANT),
 ID(id_bhvBubbleMaybe),

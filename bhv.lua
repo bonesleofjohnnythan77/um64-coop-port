@@ -4,19 +4,17 @@
 
 ---@param o Object
 function bhv_brick_init(o)
-obj_set_model_extended(o, E_MODEL_BRICK_BLOCK)
+    obj_set_model_extended(o, E_MODEL_BRICK_BLOCK)
 end
 
 ---@param o Object
 function bhv_brick_update(o)
-despawn_if_stars_above_count(o, (o.oBehParams >> 24))
+    despawn_if_stars_above_count(o, (o.oBehParams >> 24))
 end
 
 --100% yoshis
 function yoshi_star(o)
-
     despawn_if_stars_below_count(o, 16)
-
 end
 
 --fuckass tree leaf spawner
@@ -24,30 +22,26 @@ end
 
 
 function Func_Custom_0x802bd158(o)
+    local spawnInterval = o.oBehParams2ndByte * math.random(2, 3)
 
+    if o.oTimer == nil then
+        o.oTimer = 0
+    end
 
-local spawnInterval = o.oBehParams2ndByte * math.random(2, 3)
+    o.oTimer = o.oTimer + 1
+    --djui_chat_message_create("Printing" .. o.oTimer)
 
-if o.oTimer == nil then
-    o.oTimer = 0
-end
-
-o.oTimer = o.oTimer + 1
---djui_chat_message_create("Printing" .. o.oTimer)
-
-if o.oTimer >= spawnInterval then
-
-    spawn_non_sync_object(id_bhvTreeLeaf, E_MODEL_LEAVES, o.oPosX, o.oPosY, o.oPosZ, nil)
-    o.oTimer = 0
-    cur_obj_become_intangible()
-end
-
+    if o.oTimer >= spawnInterval then
+        spawn_non_sync_object(id_bhvTreeLeaf, E_MODEL_LEAVES, o.oPosX, o.oPosY, o.oPosZ, nil)
+        o.oTimer = 0
+        cur_obj_become_intangible()
+    end
 end
 
 --bubble spawner
 
 function Func_Custom_0x802bd1c0(o)
-     local spawnInterval = o.oBehParams2ndByte or 60
+    local spawnInterval = o.oBehParams2ndByte or 60
 
     if o.oTimer == nil then
         o.oTimer = 0
@@ -59,7 +53,7 @@ function Func_Custom_0x802bd1c0(o)
         spawn_non_sync_object(id_bhvBubbleMaybe, E_MODEL_WHITE_PARTICLE_SMALL, o.oPosX, o.oPosY, o.oPosZ, nil)
         o.oTimer = 0
         cur_obj_become_intangible()
-    end   
+    end
 end
 
 function bhv_water_bubble_init_new(o)
@@ -70,7 +64,7 @@ end
 --crystals
 
 function bhv_crystal_size_loop(o)
-    local scale = (o.oBehParams2ndByte * 0.0099487305) + 0.25   
+    local scale = (o.oBehParams2ndByte * 0.0099487305) + 0.25
     o.header.gfx.scale.x = scale
     o.header.gfx.scale.y = scale
     o.header.gfx.scale.z = scale
@@ -79,15 +73,8 @@ end
 --thought there was something else to this
 
 function bhv_new_openable_grill(o)
-
-bhv_openable_grill_loop()
-
-
+    bhv_openable_grill_loop()
 end
-
-
-
-
 
 --poundable crystal
 
@@ -120,19 +107,17 @@ function breakable_box_init(o)
 end
 
 function Func_Custom_0x802bc664(o)
+    obj_set_hitbox(o, sBreakableBoxHitbox)
+    obj_set_model_extended(o, E_MODEL_POUNDABLE_CRYSTAL)
 
-obj_set_hitbox(o, sBreakableBoxHitbox)
-obj_set_model_extended(o, E_MODEL_POUNDABLE_CRYSTAL)
-
-if o.oTimer == 0 then
-    breakable_box_init(o)
-end
+    if o.oTimer == 0 then
+        breakable_box_init(o)
+    end
 
     if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
         obj_explode_and_spawn_coins(46, 1)
-        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)  -- 0x3041c081
+        create_sound_spawner(SOUND_GENERAL_BREAK_BOX) -- 0x3041c081
     end
-
 end
 
 --metal cap only box
@@ -140,48 +125,41 @@ end
 
 
 function Func_Custom_0x802c2ab4(o)
+    obj_set_hitbox(o, sBreakableBoxHitbox)
+    obj_set_model_extended(o, E_MODEL_BUBBLY_TREE)
+    local m = nearest_mario_state_to_object(o)
 
-obj_set_hitbox(o, sBreakableBoxHitbox)
-obj_set_model_extended(o, E_MODEL_BUBBLY_TREE)
-local m = nearest_mario_state_to_object(o)
-
-if o.oTimer == 0 then
-    breakable_box_init(o)
-end
-
-if m.flags & MARIO_METAL_CAP == 0 then
-    if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
-        o.oHealth = 1
+    if o.oTimer == 0 then
+        breakable_box_init(o)
     end
-end
 
-if m.flags & MARIO_METAL_CAP ~= 0 then
-    if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
-        obj_explode_and_spawn_coins(46, 1)
-        create_sound_spawner(SOUND_GENERAL_BREAK_BOX)  -- 0x3041c081
+    if m.flags & MARIO_METAL_CAP == 0 then
+        if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+            o.oHealth = 1
+        end
     end
-end
 
+    if m.flags & MARIO_METAL_CAP ~= 0 then
+        if cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+            obj_explode_and_spawn_coins(46, 1)
+            create_sound_spawner(SOUND_GENERAL_BREAK_BOX) -- 0x3041c081
+        end
+    end
 end
 
 --coin spawner
 
 function coin_spawner_update(o)
-
     local m = nearest_mario_state_to_object(o)
 
     if not (o.oAction > 0) then
-        
-
         if obj_check_hitbox_overlap(m.marioObj, o) then
             if o.oBehParams2ndByte ~= 1 then
                 spawn_non_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
-                
             else
                 spawn_non_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             end
             o.oAction = 1
-              
         end
     end
 end
@@ -191,12 +169,11 @@ function message_block_init(o)
     local m = gMarioStates[0]
     local collide = obj_check_if_collided_with_object(o, m.marioObj)
     if not m then return end
-    
+
     if collide ~= 0 then
         create_dialog_box(o.oBehParams2ndByte)
     end
     obj_set_model_extended(o, E_MODEL_MESSAGE_BOX)
-
 end
 
 --UM64 Silver Star
@@ -204,19 +181,16 @@ end
 function Func_Custom_0x802b2dac(o)
     local m = nearest_mario_state_to_object(o)
     o.oFaceAngleYaw = o.oFaceAngleYaw + 0x800
-    
+
 
     if o.oTimer > 90 or (o.oMoveFlags & 1) ~= 0 then
         cur_obj_become_tangible()
 
         if obj_check_if_collided_with_object(o, m.marioObj) ~= 0 then
-            
-
             obj_mark_for_deletion(o)
             spawn_non_sync_object(id_bhvGoldenCoinSparkles, E_MODEL_NONE, o.oPosX, o.oPosY, o.oPosZ, nil)
         end
     end
-    
 end
 
 --UM64 Noteblock
@@ -227,7 +201,6 @@ function Func_Custom_0x802c2b4c(o)
     local speed = 64
 
     if cur_obj_is_mario_on_platform() == 1 and not is_bubbled(m) then
-
         set_mario_action(m, ACT_DOUBLE_JUMP, 1)
         m.vel.y = speed + 12
 
@@ -242,18 +215,80 @@ function Func_Custom_0x802c2b4c(o)
             create_sound_spawner(SOUND_GENERAL_BOING1)
             m.vel.y = speed + strength
         end
+    end
+end
 
+--Poundable Switch: There's three in total but i should make it so it can be any mount. A star spawns after all switches have been ground pounded.
 
-        
-    end    
+function bhv_poundable_switch_init(o)
+    obj_set_model_extended(o, E_MODEL_POUNDABLE_SWITCH_BLUE)
+    network_init_object(o, false, { "oAction", })
+end
 
+function bhv_poundable_switch_loop(o)
+    local m = nearest_mario_state_to_object(o)
 
+    if o.oAction == 0 then
+        if m and cur_obj_was_attacked_or_ground_pounded() ~= 0 then
+            o.oAction = 1
+            create_sound_spawner(SOUND_GENERAL_SWITCH_DOOR_OPEN)
+            network_send_object(o, true)
+        end
+    end
+
+    if o.oAction == 1 then
+        obj_set_model_extended(o, E_MODEL_POUNDABLE_SWITCH_YELLOW)
+    end
 end
 
 
-hook_event(HOOK_UPDATE, function()
+--Poundable Switch Star Spawn (borrowed from MOPs a bit here)
 
+---@param o Object
+function bhv_poundable_switch_starspawn_init(o)
+    o.oFlags = OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE
+    o.oHealth = 0
+end
+
+function bhv_poundable_switch_starspawn_loop(o)
+    local switch_amount = obj_count_objects_with_behavior_id(id_bhvChainChompGate)
+
+    if switch_amount > o.oHealth or o.oHealth == 0 then
+        o.oHealth = switch_amount
+        return
+    end
+
+    o.oHiddenStarTriggerCounter = 0
+    local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
+    while switch do
+        if switch.oAction == 1 then
+           o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
+        end
+        switch = obj_get_next_with_same_behavior_id(switch)
+    end
+
+    if o.oHiddenStarTriggerCounter == o.oHealth then
+        spawn_red_coin_cutscene_star(o.oPosX, o.oPosY, o.oPosZ)
+        obj_mark_for_deletion(o)
+    end
+end
+
+function set_model(o)
+    obj_set_model_extended(o, E_MODEL_CRYSTAL_PLATFORM)
+end
+
+hook_event(HOOK_ON_OBJECT_UNLOAD,
+---@param o Object
+function (o)
+    -- Force spawn star for newly entering players
+    if obj_has_behavior_id(o, id_bhvBulletBill) == 1 and o.oHiddenStarTriggerCounter ~= o.oHealth then
+        local starspawn_obj = obj_get_first_with_behavior_id(id_bhvBulletBill)
+        spawn_red_coin_cutscene_star(starspawn_obj.oPosX, starspawn_obj.oPosY, starspawn_obj.oPosZ)
+    end
+end)
+
+hook_event(HOOK_UPDATE, function()
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
     for_each_object_with_behavior(bhvKoopaRaceEndpoint, yoshi_star)
-
-    end)
+    for_each_object_with_behavior(id_bhvSquarishPathMoving, set_model)
+end)
