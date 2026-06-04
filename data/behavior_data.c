@@ -290,3 +290,48 @@ CALL_NATIVE(bhv_bubble_maybe_loop),
 END_REPEAT(),
 DEACTIVATE(),
 };
+
+const BehaviorScript bhvSunkenShipPart[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvSunkenShipPart),
+OR_INT(oFlags,1),
+SET_INT(oIntangibleTimer,0),
+BEGIN_LOOP(),
+ADD_INT(oAnimState,1),
+END_LOOP(),
+};
+
+const BehaviorScript bhvLllRotatingHexagonalRing[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvLllRotatingHexagonalRing),
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(green_dotted_block_collision),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_squarish_path_moving_loop),
+END_LOOP(),
+};
+
+const BehaviorScript bhvPyramidTop[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvPyramidTop),
+OR_INT(oFlags,17),
+LOAD_COLLISION_DATA(green_block_collision),
+CALL_NATIVE( bhv_ssl_moving_pyramid_wall_init),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_ssl_moving_pyramid_wall_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
+
+const BehaviorScript bhvLllMovingOctagonalMeshPlatform[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvLllMovingOctagonalMeshPlatform),
+OR_INT(oFlags,65),
+SET_HOME(),
+LOAD_COLLISION_DATA(green_block_collision),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_lll_moving_octagonal_mesh_platform_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
