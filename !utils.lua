@@ -80,19 +80,49 @@ end
 
 
 
-function spawn_star_coin_secret(m)
-    if m.playerIndex ~= 0 then return end
-    
-    local numcoins = m.numCoins
-    local required = gLevelValues.coinsRequiredForCoinStar
-    
+local prev_numCoins = 0
 
+hook_event(HOOK_ALLOW_INTERACT, function(m, obj, inter_type)
+  if inter_type == INTERACT_COIN then
+    prev_numCoins = m.numCoins
+  end
+  return true
+end)
+
+
+hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)  
+    for i = 0, MAX_PLAYERS - 1 do
+        local m = gMarioStates[i]
+        local np = gNetworkPlayers[i]
+
+        if inter_type == INTERACT_COIN then
+            local numcoins = m.numCoins
+            local required = gLevelValues.coinsRequiredForCoinStar
+            if np.currLevelNum == LEVEL_TOTWC or np.currLevelNum == LEVEL_PSS then
+                if m.controller.buttonPressed & X_BUTTON ~= 0 then
+                    bhv_spawn_star_no_level_exit(m.marioObj, 6, 1)
+                end
+            end
+        end
+    end
+end)
+
+
+--[[
+hook_event(HOOK_MARIO_UPDATE, function (inter_type)
     
-    if gNetworkPlayers[0].currLevelNum == LEVEL_TOTWC or gNetworkPlayers[0].currLevelNum == LEVEL_PSS then
-        if numcoins >= required then
+    for i = 0, MAX_PLAYERS - 1 do
+        local m = gMarioStates[i]
+        local np = gNetworkPlayers[i] 
+        if inter_type == INTERACT_COIN then
+            local numcoins = m.numCoins
+            local required = gLevelValues.coinsRequiredForCoinStar            
+        if np.currLevelNum == LEVEL_TOTWC or np.currLevelNum == LEVEL_PSS then
+        if numcoins >= required and prev_numCoins < required then    
         bhv_spawn_star_no_level_exit(m.marioObj, 6, 0)
         end
-    end    
+    end
 end
 
-hook_event(HOOK_MARIO_UPDATE, spawn_star_coin_secret)
+end)
+]]--
