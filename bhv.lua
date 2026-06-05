@@ -130,7 +130,6 @@ end
 --metal cap only box
 
 
-
 function Func_Custom_0x802c2ab4(o)
     obj_set_hitbox(o, sBreakableBoxHitbox)
     obj_set_model_extended(o, E_MODEL_BUBBLY_TREE)

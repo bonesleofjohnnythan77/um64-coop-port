@@ -76,3 +76,23 @@ function obj_set_hitbox(obj, hitbox)
     obj.hitboxDownOffset = obj.header.gfx.scale.y * hitbox.downOffset
 end
 
+--spawn 100 coin star in non main levels.
+
+
+
+function spawn_star_coin_secret(m)
+    if m.playerIndex ~= 0 then return end
+    
+    local numcoins = m.numCoins
+    local required = gLevelValues.coinsRequiredForCoinStar
+    
+
+    
+    if gNetworkPlayers[0].currLevelNum == LEVEL_TOTWC or gNetworkPlayers[0].currLevelNum == LEVEL_PSS then
+        if numcoins >= required then
+        bhv_spawn_star_no_level_exit(m.marioObj, 6, 0)
+        end
+    end    
+end
+
+hook_event(HOOK_MARIO_UPDATE, spawn_star_coin_secret)
