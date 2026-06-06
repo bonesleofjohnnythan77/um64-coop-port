@@ -243,7 +243,7 @@ function bhv_poundable_switch_loop(o)
     if o.oAction == 0 then
         if m and cur_obj_was_attacked_or_ground_pounded() ~= 0 then
             o.oAction = 1
-            create_sound_spawner(SOUND_GENERAL_SWITCH_DOOR_OPEN)
+            create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
             network_send_object(o, true)
         end
     end
@@ -264,6 +264,13 @@ end
 
 function bhv_poundable_switch_starspawn_loop(o)
     local switch_amount = obj_count_objects_with_behavior_id(id_bhvChainChompGate)
+    local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
+
+     if o.oBehParams2ndByte == 10 then
+    switch_amount = obj_count_objects_with_behavior_id(Bhv_Custom_0x130017b8)
+    switch = obj_get_first_with_behavior_id(Bhv_Custom_0x130017b8)
+    djui_chat_message_create("work")
+end
 
     if switch_amount > o.oHealth or o.oHealth == 0 then
         o.oHealth = switch_amount
@@ -271,7 +278,10 @@ function bhv_poundable_switch_starspawn_loop(o)
     end
 
     o.oHiddenStarTriggerCounter = 0
-    local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
+    
+
+
+
     while switch do
         if switch.oAction == 1 then
            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
@@ -285,9 +295,67 @@ function bhv_poundable_switch_starspawn_loop(o)
     end
 end
 
+function bhv_solid_stepblock_init(o)
+    o.oAction = 0
+    o.oTimer = 0
+    o.oHiddenStarTriggerCounter = 0
+    obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
+    network_init_object(o, false, {"oAction", "oHiddenStarTriggerCounter",})
+end
+
+function bhv_solid_stepblock_loop(o)
+    
+local starspawner = obj_get_first_with_behavior_id(id_bhvBulletBill)
+
+
+    if o.oAction == 0 then
+         
+
+        -- Check if Mario is on the platform
+        if cur_obj_is_any_player_on_platform() ~= 0 then
+            o.oAction = 1
+            o.oTimer = 0
+            network_send_object(o, true)
+        end
+        obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
+    else
+        -- Mario stepped on it, solid state
+        if o.oTimer == 0 then
+            create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
+            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
+            network_send_object(o, true)
+        end
+        
+        obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
+        
+        -- Revert to transparent after 558 frames
+        if o.oTimer == 0x22E and o.oHiddenStarTriggerCounter ~= 0 and starspawner then
+            o.oAction = 0
+            create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
+            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter - 1
+            network_send_object(o, true)
+        end
+        
+        o.oTimer = o.oTimer + 1
+        network_send_object(o, true)    
+
+    end
+
+    if not starspawner then
+        o.oAction = 1
+        o.oTimer = 0
+        obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
+        network_send_object(o, true)
+    end   
+
+
+end
+
 function set_model(o)
     obj_set_model_extended(o, E_MODEL_CRYSTAL_PLATFORM)
 end
+
+
 
 hook_event(HOOK_ON_OBJECT_UNLOAD,
 ---@param o Object

@@ -1,0 +1,8 @@
+extern const GeoLayout transparent_stepblock_geo[];
+extern Lights1 transparent_stepblock_transparent_lights;
+extern u8 transparent_stepblock__07009310_rgba16[];
+extern Vtx transparent_stepblock_000_displaylist_mesh_layer_5_vtx_0[98];
+extern Gfx transparent_stepblock_000_displaylist_mesh_layer_5_tri_0[];
+extern Gfx mat_transparent_stepblock_transparent[];
+extern Gfx mat_revert_transparent_stepblock_transparent[];
+extern Gfx transparent_stepblock_000_displaylist_mesh_layer_5_with_revert[];

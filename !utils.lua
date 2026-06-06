@@ -11,7 +11,10 @@ E_MODEL_CRYSTAL_PLATFORM = smlua_model_util_get_id("crystal_platform_geo")
 E_MODEL_POUNDABLE_CRYSTAL = smlua_model_util_get_id("poundable_crystal_geo")
 E_MODEL_POUNDABLE_SWITCH_BLUE = smlua_model_util_get_id("poundable_switch_blue_geo")
 E_MODEL_POUNDABLE_SWITCH_YELLOW = smlua_model_util_get_id("poundable_switch_yellow_geo")
+E_MODEL_SOLID_STEPBLOCK = smlua_model_util_get_id("solid_stepblock_geo")
+E_MODEL_TRANSPARENT_STEPBLOCK = smlua_model_util_get_id("transparent_stepblock_geo")
 
+COL_SOLID_STEPBLOCK = smlua_collision_util_get("solid_stepblock_collision")
 COL_POUNDABLE_SWITCH_BLUE = smlua_collision_util_get("poundable_switch_blue_collision")
 COL_POUNDABLE_CRYSTAL = smlua_collision_util_get("poundable_crystal_collision")
 COL_CRYSTAL_PLATFORM = smlua_collision_util_get("crystal_platform_collision")
@@ -78,8 +81,6 @@ end
 
 --spawn 100 coin star in non main levels.
 
-
-
 local prev_numCoins = 0
 
 hook_event(HOOK_ALLOW_INTERACT, function(m, obj, inter_type)
@@ -90,16 +91,17 @@ hook_event(HOOK_ALLOW_INTERACT, function(m, obj, inter_type)
 end)
 
 
-hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)  
+hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)
     for i = 0, MAX_PLAYERS - 1 do
-        local m = gMarioStates[i]
+        --local m = gMarioStates[i]
         local np = gNetworkPlayers[i]
 
         if inter_type == INTERACT_COIN then
             local numcoins = m.numCoins
             local required = gLevelValues.coinsRequiredForCoinStar
-            if np.currLevelNum == LEVEL_TOTWC or np.currLevelNum == LEVEL_PSS then
-                if m.controller.buttonPressed & X_BUTTON ~= 0 then
+            if np.currLevelNum == LEVEL_TOTWC or np.currLevelNum == LEVEL_PSS or np.currLevelNum == LEVEL_COTMC then
+                if numcoins >= required and prev_numCoins < required then
+                --if m.controller.buttonDown & X_BUTTON ~= 0 then --debug
                     bhv_spawn_star_no_level_exit(m.marioObj, 6, 1)
                 end
             end
@@ -108,7 +110,7 @@ hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)
 end)
 
 
---[[
+--[[ WONT BE USED ANYMORE
 hook_event(HOOK_MARIO_UPDATE, function (inter_type)
     
     for i = 0, MAX_PLAYERS - 1 do

@@ -335,3 +335,15 @@ CALL_NATIVE( bhv_lll_moving_octagonal_mesh_platform_loop),
 CALL_NATIVE( load_object_collision_model),
 END_LOOP(),
 };
+
+const BehaviorScript Bhv_Custom_0x130017b8[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvNewId),
+OR_INT(oFlags,1),
+LOAD_COLLISION_DATA(solid_stepblock_collision),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_solid_stepblock_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
