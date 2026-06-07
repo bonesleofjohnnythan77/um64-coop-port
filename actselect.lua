@@ -10,8 +10,8 @@ local targetWarpInfo = {
 
 local MAX_ACT_NUM = 6
 local COIN_STAR_ID = 6
-local SPACING = 163
-local STAR_POS_Y = 280
+local SPACING = 200
+local STAR_POS_Y = 120
 local STAR_POS_Z = -300
 
 local selectableActs = {}
@@ -29,7 +29,7 @@ local function star_select_handler_init(o)
     local stars = save_file_get_star_flags(saveFile, courseId)
 
     if (stars & (1 << COIN_STAR_ID)) ~= 0 then
-        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 377, o.oPosY + (STAR_POS_Y - 215), o.oPosZ + STAR_POS_Z, function(coinStar)
+        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 227, o.oPosY + (STAR_POS_Y - 500), o.oPosZ + STAR_POS_Z, function(coinStar)
             obj_scale(coinStar, 0.8)
         end)
     end
@@ -164,9 +164,9 @@ end
 local function star_selector_star_init(o)
     o.oFlags = OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_MOVE_XZ_USING_FVEL
     o.oFaceAngleYaw = 0
-    o.oStarSelectorSize = 1
-
+    o.oStarSelectorSize = 1.3
     local isStarCollected
+
 
     local saveFileNum = get_current_save_file_num() - 1
     local courseIndex = targetWarpInfo.targetCourse - 1
@@ -188,12 +188,12 @@ local function star_selector_star_loop(o)
         if transitionTimer <= 0 then
             o.oFaceAngleYaw = o.oFaceAngleYaw + 0x800
         end
-        if o.oStarSelectorSize < 1.3 then
+        if o.oStarSelectorSize < 1.69 then
             o.oStarSelectorSize = o.oStarSelectorSize + 0.15
         end
     else
         o.oFaceAngleYaw = 0
-        if o.oStarSelectorSize > 1 then
+        if o.oStarSelectorSize > 1.3 then
             o.oStarSelectorSize = o.oStarSelectorSize - 0.15
         end
     end
@@ -284,25 +284,25 @@ local function hud_render()
 
         djui_hud_world_pos_to_screen_pos(pos, out)
 
-        djui_hud_print_text(""..o.oBehParams2ndByte + 1, out.x - 3, out.y - 34, 1)
+        djui_hud_print_text(""..o.oBehParams2ndByte + 1, out.x - 3, out.y - 54, 0.9)
     end)
 
     local actName = get_star_name(targetWarpInfo.targetCourse, starSelectHandler.oBehParams2ndByte + 1):upper()
 
-    local actNamePosX = (sWidth -  djui_hud_measure_text(actName)) * 0.5
-    local actNamePosY = out.y + 16
-
+    local actNamePosX = (sWidth - djui_hud_measure_text(actName)) * 0.5
+    local actNamePosY = (sHeight - 50)
+    djui_hud_set_font(FONT_TINY)
     djui_hud_print_text(actName, actNamePosX, actNamePosY, 1)
 
-    local scoreText = "MYSCORE"
+    local scoreText = "SCORE"
     djui_hud_set_font(FONT_TINY)
     local scoreWidth = djui_hud_measure_text(scoreText)
 
-    local coinScoreText = " $@" .. save_file_get_course_coin_score(get_current_save_file_num() - 1, targetWarpInfo.targetCourse)
+    local coinScoreText = tostring(save_file_get_course_coin_score(get_current_save_file_num() - 1, targetWarpInfo.targetCourse))
     djui_hud_set_font(FONT_HUD)
-    local coinScoreWidth = djui_hud_measure_text(coinScoreText)
+    --local coinScoreWidth = djui_hud_measure_text(coinScoreText)
 
-    local totalWidth = scoreWidth + coinScoreWidth
+    local totalWidth = scoreWidth + 105
     local centerX = (sWidth - totalWidth) * 0.5
     local scoreY = actNamePosY + 25
 
@@ -312,14 +312,21 @@ local function hud_render()
     djui_hud_set_color(255, 255, 255, 255)
 
     djui_hud_set_font(FONT_HUD)
-    djui_hud_print_text(coinScoreText, centerX + scoreWidth, scoreY, 1)
+    djui_hud_print_text("$", centerX + 40, scoreY, 1)
+    djui_hud_print_text("@", centerX + 56, scoreY, 1)
+    djui_hud_print_text(coinScoreText, centerX + 75, scoreY, 1)
 
-    local courseTextureTop = get_texture_info("texture_menu_course_upper")
-    local courseTextureBottom = get_texture_info("texture_menu_course_lower")
+    local courseText = "COURSE"
+    local courseTextWidth = djui_hud_measure_text(courseText)
+    local courseTextX = (sWidth * 0.5) - (courseTextWidth* 0.5)
+    local courseTextY = out.y + 40
+    djui_hud_set_font(FONT_HUD)
+    djui_hud_print_text(courseText, courseTextX, courseTextY, 1)
 
-    local coursePlatePosX = (sWidth * 0.5) - (courseTextureTop.width * 0.5)
-    local coursePlateTopPosY = (scoreY + (courseTextureTop.height * 0.75))
-    local coursePlateBottomPosY =  coursePlateTopPosY + courseTextureBottom.height
+
+    --local coursePlatePosX = (sWidth * 0.5) - (courseTextureTop.width * 0.5)
+    local coursePlateTopPosY = (scoreY * 0.75)
+    local coursePlateBottomPosY =  coursePlateTopPosY
 
     djui_hud_set_filter(FILTER_LINEAR)
     --djui_hud_render_texture(courseTextureTop, coursePlatePosX, coursePlateTopPosY, 1, 1)
@@ -327,7 +334,7 @@ local function hud_render()
     djui_hud_set_filter(FILTER_NEAREST)
 
     local courseNumX = (sWidth * 0.5)
-    local courseNumY = coursePlateBottomPosY - 2
+    local courseNumY = courseTextY + 19
     local courseNumChars = count_string_chars(""..targetWarpInfo.targetCourse)
 
     djui_hud_print_text(""..targetWarpInfo.targetCourse, courseNumX - (7 * courseNumChars), courseNumY, 1)
@@ -338,7 +345,7 @@ local function hud_render()
     local levelName = get_level_name(targetWarpInfo.targetCourse, targetWarpInfo.targetLevel, targetWarpInfo.targetArea):upper()
     local levelNameWidth = djui_hud_measure_text(levelName)
     local levelNameX = (sWidth * 0.5) - (levelNameWidth * 0.5)
-    local levelNameY = 60
+    local levelNameY = 20
 
     djui_hud_print_text(levelName, levelNameX, levelNameY, 1)
 end
@@ -356,7 +363,7 @@ local function before_mario_update(m)
     if gNetworkPlayers[0].currLevelNum == LEVEL_ACT_SELECT then
         if transitionTimer <= 0 then
 
-            local transColor = {r = 255, g = 255, b = 255}
+            local transColor = {r = 255, g = 239, b = 238}
 
             if m.controller.buttonPressed & (A_BUTTON | START_BUTTON) ~= 0 then
                 play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource)
