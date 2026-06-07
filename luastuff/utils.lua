@@ -1,5 +1,16 @@
 --Useful romhack functions and important globals
 
+require("actselect")
+require("bhv")
+require("courses")
+require("hud")
+require("itembox")
+require("scroll_textures")
+require("moving_textures")
+require("sound")
+require("tweaks")
+require("dialogs")
+
 E_MODEL_BRICK_BLOCK = smlua_model_util_get_id("brick_block_geo")
 E_MODEL_BREAKABLE_BRICK = smlua_model_util_get_id("breakable_brick_geo")
 E_MODEL_MESSAGE_BOX = smlua_model_util_get_id("message_box_geo")

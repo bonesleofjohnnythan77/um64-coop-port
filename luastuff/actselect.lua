@@ -11,7 +11,7 @@ local targetWarpInfo = {
 local MAX_ACT_NUM = 6
 local COIN_STAR_ID = 6
 local SPACING = 200
-local STAR_POS_Y = 120
+local STAR_POS_Y = 100
 local STAR_POS_Z = -300
 
 local selectableActs = {}
@@ -29,7 +29,7 @@ local function star_select_handler_init(o)
     local stars = save_file_get_star_flags(saveFile, courseId)
 
     if (stars & (1 << COIN_STAR_ID)) ~= 0 then
-        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 257, o.oPosY + (STAR_POS_Y - 502), o.oPosZ + STAR_POS_Z, function(coinStar)
+        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 257, o.oPosY + (STAR_POS_Y - 472), o.oPosZ + STAR_POS_Z, function(coinStar)
             obj_scale(coinStar, 0.8)
         end)
     end
@@ -290,9 +290,9 @@ local function hud_render()
     local actName = get_star_name(targetWarpInfo.targetCourse, starSelectHandler.oBehParams2ndByte + 1):upper()
 
     local actNamePosX = (sWidth - djui_hud_measure_text(actName)) * 0.5
-    local actNamePosY = (sHeight - 50)
+    local actNamePosY = (sHeight - 53)
     djui_hud_set_font(FONT_TINY)
-    djui_hud_print_text(actName, actNamePosX, actNamePosY, 1)
+    djui_hud_print_text(actName, actNamePosX, actNamePosY, 1, 0.7)
 
     local scoreText = "SCORE"
     djui_hud_set_font(FONT_TINY)

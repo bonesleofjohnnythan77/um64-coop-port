@@ -2,6 +2,9 @@
 -- description: 
 -- incompatible: romhack
 
+require("luastuff/utils")
+
+
 gLevelValues.entryLevel = LEVEL_CASTLE_GROUNDS
 gLevelValues.cellHeightLimit = 32767
 gLevelValues.floorLowerLimit = -32768
