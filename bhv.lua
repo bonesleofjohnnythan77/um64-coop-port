@@ -269,7 +269,7 @@ function bhv_poundable_switch_starspawn_loop(o)
      if o.oBehParams2ndByte == 10 then
     switch_amount = obj_count_objects_with_behavior_id(Bhv_Custom_0x130017b8)
     switch = obj_get_first_with_behavior_id(Bhv_Custom_0x130017b8)
-    djui_chat_message_create("work")
+    --djui_chat_message_create("work")
 end
 
     if switch_amount > o.oHealth or o.oHealth == 0 then

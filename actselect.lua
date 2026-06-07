@@ -29,7 +29,7 @@ local function star_select_handler_init(o)
     local stars = save_file_get_star_flags(saveFile, courseId)
 
     if (stars & (1 << COIN_STAR_ID)) ~= 0 then
-        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 227, o.oPosY + (STAR_POS_Y - 500), o.oPosZ + STAR_POS_Z, function(coinStar)
+        spawn_non_sync_object(id_bhvStaticObject, E_MODEL_STAR, 257, o.oPosY + (STAR_POS_Y - 502), o.oPosZ + STAR_POS_Z, function(coinStar)
             obj_scale(coinStar, 0.8)
         end)
     end
@@ -284,7 +284,7 @@ local function hud_render()
 
         djui_hud_world_pos_to_screen_pos(pos, out)
 
-        djui_hud_print_text(""..o.oBehParams2ndByte + 1, out.x - 3, out.y - 54, 0.9)
+        djui_hud_print_text(""..o.oBehParams2ndByte + 1, out.x - 3, out.y - 50, 0.9)
     end)
 
     local actName = get_star_name(targetWarpInfo.targetCourse, starSelectHandler.oBehParams2ndByte + 1):upper()
@@ -298,8 +298,7 @@ local function hud_render()
     djui_hud_set_font(FONT_TINY)
     local scoreWidth = djui_hud_measure_text(scoreText)
 
-    local coinScoreText = tostring(save_file_get_course_coin_score(get_current_save_file_num() - 1, targetWarpInfo.targetCourse))
-    djui_hud_set_font(FONT_HUD)
+    local coinScoreText = tostring(save_file_get_course_coin_score(get_current_save_file_num() - 1, targetWarpInfo.targetCourse - 1))
     --local coinScoreWidth = djui_hud_measure_text(coinScoreText)
 
     local totalWidth = scoreWidth + 105
@@ -314,7 +313,7 @@ local function hud_render()
     djui_hud_set_font(FONT_HUD)
     djui_hud_print_text("$", centerX + 40, scoreY, 1)
     djui_hud_print_text("@", centerX + 56, scoreY, 1)
-    djui_hud_print_text(coinScoreText, centerX + 75, scoreY, 1)
+    djui_hud_print_text(coinScoreText, centerX + 73, scoreY, 1)
 
     local courseText = "COURSE"
     local courseTextWidth = djui_hud_measure_text(courseText)
