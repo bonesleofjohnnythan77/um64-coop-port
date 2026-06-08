@@ -284,7 +284,7 @@ local function hud_render()
 
         djui_hud_world_pos_to_screen_pos(pos, out)
 
-        djui_hud_print_text(""..o.oBehParams2ndByte + 1, out.x - 3, out.y - 50, 0.9)
+        djui_hud_print_text(""..o.oBehParams2ndByte + 1, (out.x + 3) * 0.8 + 26, out.y - 50, 1, 0.8)
     end)
 
     local actName = get_star_name(targetWarpInfo.targetCourse, starSelectHandler.oBehParams2ndByte + 1):upper()

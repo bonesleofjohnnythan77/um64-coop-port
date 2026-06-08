@@ -371,4 +371,7 @@ hook_event(HOOK_UPDATE, function()
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
     for_each_object_with_behavior(bhvKoopaRaceEndpoint, yoshi_star)
     for_each_object_with_behavior(id_bhvSquarishPathMoving, set_model)
+    for_each_object_with_behavior(id_bhvSunkenShipPart, function (o)
+       o.header.gfx.skipInViewCheck = true
+    end)
 end)

@@ -49,14 +49,14 @@ local function streamed_audio_update()
 
         local speed = entry.speed or 1
 
-        if is_game_paused() then
+        --[[if is_game_paused() then
             if gNetworkPlayers[0].currCourseNum == COURSE_NONE then
                 vol = vol * 0.25
             else
                 speed = 0.01 --can't put 0
                 vol = 0
             end
-        end
+        end]]--
 
         audio_stream_set_frequency(entry.audio, speed)
         audio_stream_set_volume(entry.audio, entry.stream.volume * vol)

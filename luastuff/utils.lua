@@ -120,6 +120,20 @@ hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)
     end
 end)
 
+hook_event(HOOK_MARIO_UPDATE, function (m)
+    local shadeR = m.marioBodyState.shadeR
+    local shadeG = m.marioBodyState.shadeG
+    local shadeB = m.marioBodyState.shadeB
+    if gNetworkPlayers[0].currLevelNum == LEVEL_WF or gNetworkPlayers[0].currLevelNum == LEVEL_COTMC then
+        m.marioBodyState.shadeR = 19
+        m.marioBodyState.shadeG = 58
+        m.marioBodyState.shadeB = 212
+    else
+        m.marioBodyState.shadeR = shadeR
+        m.marioBodyState.shadeG = shadeG
+        m.marioBodyState.shadeB = shadeB
+    end
+end)
 
 --[[ WONT BE USED ANYMORE
 hook_event(HOOK_MARIO_UPDATE, function (inter_type)
