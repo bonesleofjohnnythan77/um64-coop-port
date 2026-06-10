@@ -167,13 +167,14 @@ end
 
 function coin_spawner_update(o)
     local m = nearest_mario_state_to_object(o)
+    if not m then return end
 
     if not (o.oAction > 0) then
         if obj_check_hitbox_overlap(m.marioObj, o) then
             if o.oBehParams2ndByte ~= 1 then
-                spawn_non_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             else
-                spawn_non_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             end
             o.oAction = 1
             cur_obj_become_intangible()
@@ -220,7 +221,7 @@ function Func_Custom_0x802c2b4c(o)
 
     if cur_obj_is_mario_on_platform() == 1 and not is_bubbled(m) then
         set_mario_action(m, ACT_DOUBLE_JUMP, 1)
-        m.vel.y = speed + 12
+        m.vel.y = speed
 
 
         if (m.controller.buttonDown & A_BUTTON) ~= 0 then
@@ -237,6 +238,13 @@ function Func_Custom_0x802c2b4c(o)
 end
 
 --Poundable Switch: There's three in total but i should make it so it can be any mount. A star spawns after all switches have been ground pounded.
+
+local star_spawned = false
+
+hook_event(HOOK_ON_LEVEL_INIT, function ()
+    star_spawned = false
+end)
+
 
 function bhv_poundable_switch_init(o)
     obj_set_model_extended(o, E_MODEL_POUNDABLE_SWITCH_BLUE)
@@ -260,6 +268,58 @@ function bhv_poundable_switch_loop(o)
 end
 
 
+
+
+function bhv_solid_stepblock_init(o)
+    o.oAction = 0
+    o.oTimer = 0
+    obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
+    network_init_object(o, false, {"oAction", "oTimer"})
+end
+
+function bhv_solid_stepblock_loop(o)
+
+  
+    --djui_chat_message_create("oTimer:" .. o.oTimer)
+    --djui_chat_message_create("oAction:" .. o.oAction)
+
+    if star_spawned == true then
+        o.oAction = 2
+        o.oTimer = 0
+        if o.oAction == 2 then
+            obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
+        end
+        network_send_object(o, true)
+    else
+        if o.oAction == 0 then
+            obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
+            o.oTimer = 0
+            if cur_obj_is_any_player_on_platform() ~= 0 and not is_bubbled(gMarioStates[0]) then
+                create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
+                o.oAction = 1
+                network_send_object(o, true)
+            end
+        elseif o.oAction == 1 then
+            obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
+            o.oTimer = o.oTimer + 1
+            network_send_object(o, true)
+            if o.oTimer >= 1200 then
+                o.oAction = 0
+                create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
+                network_send_object(o, true)
+            end
+        end
+    end
+
+
+
+
+end
+
+function set_model(o)
+    obj_set_model_extended(o, E_MODEL_CRYSTAL_PLATFORM)
+end
+
 --Poundable Switch Star Spawn (borrowed from MOPs a bit here)
 
 ---@param o Object
@@ -272,11 +332,11 @@ function bhv_poundable_switch_starspawn_loop(o)
     local switch_amount = obj_count_objects_with_behavior_id(id_bhvChainChompGate)
     local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
 
-     if o.oBehParams2ndByte == 10 then
+    if o.oBehParams2ndByte == 10 then
     switch_amount = obj_count_objects_with_behavior_id(Bhv_Custom_0x130017b8)
     switch = obj_get_first_with_behavior_id(Bhv_Custom_0x130017b8)
     --djui_chat_message_create("work")
-end
+    end
 
     if switch_amount > o.oHealth or o.oHealth == 0 then
         o.oHealth = switch_amount
@@ -291,87 +351,29 @@ end
     while switch do
         if switch.oAction == 1 then
            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
+           network_send_object(o, true)
         end
         switch = obj_get_next_with_same_behavior_id(switch)
     end
 
-    if o.oHiddenStarTriggerCounter == o.oHealth then
+    if o.oHiddenStarTriggerCounter == o.oHealth and not star_spawned then
         spawn_red_coin_cutscene_star(o.oPosX, o.oPosY, o.oPosZ)
+        star_spawned = true
         obj_mark_for_deletion(o)
     end
+    --djui_chat_message_create("spawner:" .. o.oHiddenStarTriggerCounter)
 end
-
-function bhv_solid_stepblock_init(o)
-    o.oAction = 0
-    o.oTimer = 0
-    o.oHiddenStarTriggerCounter = 0
-    obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
-    network_init_object(o, false, {"oAction", "oHiddenStarTriggerCounter",})
-end
-
-function bhv_solid_stepblock_loop(o)
-    
-local starspawner = obj_get_first_with_behavior_id(id_bhvBulletBill)
-
-
-    if o.oAction == 0 then
-         
-
-        -- Check if Mario is on the platform
-        if cur_obj_is_any_player_on_platform() ~= 0 then
-            o.oAction = 1
-            o.oTimer = 0
-            network_send_object(o, true)
-        end
-        obj_set_model_extended(o, E_MODEL_TRANSPARENT_STEPBLOCK)
-    else
-        -- Mario stepped on it, solid state
-        if o.oTimer == 0 then
-            create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
-            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
-            network_send_object(o, true)
-        end
-        
-        obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
-        
-        -- Revert to transparent after 558 frames
-        if o.oTimer == 0x4B0 and o.oHiddenStarTriggerCounter ~= 0 and starspawner then
-            o.oAction = 0
-            create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
-            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter - 1
-            network_send_object(o, true)
-        end
-        
-        o.oTimer = o.oTimer + 1
-        network_send_object(o, true)    
-
-    end
-
-    if not starspawner then
-        o.oAction = 1
-        o.oTimer = 0
-        obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
-        network_send_object(o, true)
-    end   
-
-
-end
-
-function set_model(o)
-    obj_set_model_extended(o, E_MODEL_CRYSTAL_PLATFORM)
-end
-
-
 
 hook_event(HOOK_ON_OBJECT_UNLOAD,
 ---@param o Object
 function (o)
     -- Force spawn star for newly entering players
-    if obj_has_behavior_id(o, id_bhvBulletBill) == 1 and o.oHiddenStarTriggerCounter ~= o.oHealth then
-        local starspawn_obj = obj_get_first_with_behavior_id(id_bhvBulletBill)
-        spawn_red_coin_cutscene_star(starspawn_obj.oPosX, starspawn_obj.oPosY, starspawn_obj.oPosZ)
+    if obj_has_behavior_id(o, id_bhvBulletBill) == 1 and o.oHiddenStarTriggerCounter ~= o.oHealth and not star_spawned then
+        star_spawned = true
+        --djui_chat_message_create("test")
     end
 end)
+
 
 hook_event(HOOK_UPDATE, function()
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
