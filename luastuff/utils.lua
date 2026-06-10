@@ -139,6 +139,12 @@ hook_event(HOOK_MARIO_UPDATE, function (m)
     end
 end)
 
+hook_event(HOOK_UPDATE, function ()
+
+stop_cap_music()
+  
+end)
+
 --[[ WONT BE USED ANYMORE
 hook_event(HOOK_MARIO_UPDATE, function (inter_type)
     
