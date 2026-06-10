@@ -205,4 +205,18 @@ SEQ_LOBBY = create_streamed_sequence(0x27, "lobby.mp3", {0, 1587600}, true, 1, 1
 SEQ_LEVEL_DA = create_streamed_sequence(0x25, "darkambience.mp3", {0, 3225606}, true, 1, 1)
 SEQ_LEVEL_SPACE = create_streamed_sequence(0x24, "spacetheme.mp3", {79883, 3304148}, true, 1, 1)
 SEQ_MC_LEVEL = create_streamed_sequence(0x26, "metalcap.mp3", {0, 1745831}, true, 1, 1)
-SEQ_STAR_GET = create_streamed_sequence(SEQ_EVENT_CUTSCENE_COLLECT_STAR, "starget.mp3", nil, true, 1, 1) 
+--SEQ_STAR_GET = create_streamed_sequence(0x01, "starget.mp3", false, true, 1, 1) 
+
+--Doing this cause the template breaks when replacing the star collect song:
+
+SEQ_STAR_GET = audio_stream_load("starget.mp3")
+
+function star(x, SEQ_ID)
+        
+		if SEQ_ID == SEQ_EVENT_CUTSCENE_COLLECT_STAR then
+             audio_stream_play(SEQ_STAR_GET, false, 1)
+
+        end
+end
+
+hook_event(HOOK_ON_SEQ_LOAD, star)

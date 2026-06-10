@@ -161,6 +161,10 @@ end
 
 --coin spawner
 
+function coin_spawner_init(o)
+    network_init_object(o, false, {'oAction'})
+end
+
 function coin_spawner_update(o)
     local m = nearest_mario_state_to_object(o)
 
@@ -172,6 +176,8 @@ function coin_spawner_update(o)
                 spawn_non_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             end
             o.oAction = 1
+            cur_obj_become_intangible()
+            network_send_object(o, true)
         end
     end
 end
@@ -329,7 +335,7 @@ local starspawner = obj_get_first_with_behavior_id(id_bhvBulletBill)
         obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
         
         -- Revert to transparent after 558 frames
-        if o.oTimer == 0x22E and o.oHiddenStarTriggerCounter ~= 0 and starspawner then
+        if o.oTimer == 0x4B0 and o.oHiddenStarTriggerCounter ~= 0 and starspawner then
             o.oAction = 0
             create_sound_spawner(SOUND_GENERAL2_PURPLE_SWITCH)
             o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter - 1

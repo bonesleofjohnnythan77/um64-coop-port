@@ -10,6 +10,7 @@ require("moving_textures")
 require("sound")
 require("tweaks")
 require("dialogs")
+smlua_audio_utils_replace_sequence(0x01, 0x00, 90, "01_Seq_custom")
 
 E_MODEL_BRICK_BLOCK = smlua_model_util_get_id("brick_block_geo")
 E_MODEL_BREAKABLE_BRICK = smlua_model_util_get_id("breakable_brick_geo")
@@ -142,8 +143,10 @@ end)
 hook_event(HOOK_UPDATE, function ()
 
 stop_cap_music()
-  
+
 end)
+
+
 
 --[[ WONT BE USED ANYMORE
 hook_event(HOOK_MARIO_UPDATE, function (inter_type)
