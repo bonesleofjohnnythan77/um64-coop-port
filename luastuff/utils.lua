@@ -124,10 +124,14 @@ hook_event(HOOK_MARIO_UPDATE, function (m)
     local shadeR = m.marioBodyState.shadeR
     local shadeG = m.marioBodyState.shadeG
     local shadeB = m.marioBodyState.shadeB
-    if gNetworkPlayers[0].currLevelNum == LEVEL_WF or gNetworkPlayers[0].currLevelNum == LEVEL_COTMC then
-        m.marioBodyState.shadeR = 19
-        m.marioBodyState.shadeG = 58
-        m.marioBodyState.shadeB = 212
+    if gNetworkPlayers[0].currLevelNum == LEVEL_WF then
+        m.marioBodyState.shadeR = 46
+        m.marioBodyState.shadeG = 28
+        m.marioBodyState.shadeB = 76
+    elseif gNetworkPlayers[0].currLevelNum == LEVEL_COTMC then
+        m.marioBodyState.shadeR = 44
+        m.marioBodyState.shadeG = 66
+        m.marioBodyState.shadeB = 39        
     else
         m.marioBodyState.shadeR = shadeR
         m.marioBodyState.shadeG = shadeG
