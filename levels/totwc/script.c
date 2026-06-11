@@ -265,7 +265,7 @@ OBJECT_WITH_ACTS(0,-1140,1198,3239,0,0,0,0x100000, Bhv_Custom_0x13000f60,31),
 OBJECT_WITH_ACTS(0,16,4,210,0,0,0,5, editor_Scroll_Texture,31),
 OBJECT_WITH_ACTS(0,16,4,210,0,0,0,6, editor_Scroll_Texture,31),
 OBJECT_WITH_ACTS(0,16,4,210,0,0,0,7, editor_Scroll_Texture,31),
-OBJECT_WITH_ACTS(0,8,5,330,0,0,0,8, editor_Scroll_Texture,31),
+OBJECT_WITH_ACTS(0,8,5,345,0,0,0,8, editor_Scroll_Texture,31),
 RETURN()
 };
 const LevelScript local_warps_totwc_1_[] = {
