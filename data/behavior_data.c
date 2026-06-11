@@ -361,3 +361,17 @@ CALL_NATIVE( bhv_lll_moving_octagonal_mesh_platform_loop),
 CALL_NATIVE( load_object_collision_model),
 END_LOOP(),
 };
+
+const BehaviorScript bhvLllSinkingRockBlock[] = {
+BEGIN(OBJ_LIST_SURFACE),
+ID(id_bhvLllSinkingRockBlock)
+OR_INT(oFlags,9),
+LOAD_COLLISION_DATA(metal_box_seg8_collision_08024C28),
+SCALE(0,160),
+SET_HOME(),
+BEGIN_LOOP(),
+CALL_NATIVE( bhv_lll_sinking_rock_block_loop),
+CALL_NATIVE( bhv_lll_sinking_rock_block_loop),
+CALL_NATIVE( load_object_collision_model),
+END_LOOP(),
+};
