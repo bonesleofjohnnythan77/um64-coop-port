@@ -211,7 +211,7 @@ OBJECT_WITH_ACTS(250,-1576,2130,12612,356,28,22,0x640000, bhvUkikiCage,31),
 OBJECT_WITH_ACTS(250,-1551,2190,12391,355,292,19,0x3c0000, bhvUkikiCage,31),
 OBJECT_WITH_ACTS(116,4141,609,12589,0,0,0,0x0, bhvOneCoin,31),
 OBJECT_WITH_ACTS(0,-330,1350,-210,0,0,0,0x0, bhvAnotherTiltingPlatform,31),
-// OBJECT_WITH_ACTS(0,64,5,216,255,0,0,6, editor_Scroll_Texture,31),
+OBJECT_WITH_ACTS(0,64,5,216,0,0,0,0, editor_Scroll_Texture,31),
 RETURN()
 };
 const LevelScript local_warps_cotmc_1_[] = {

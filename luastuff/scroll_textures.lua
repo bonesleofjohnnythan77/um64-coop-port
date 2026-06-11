@@ -1,21 +1,93 @@
--- Could not find scrolling texture with ID 0
-add_scroll_target(7, "VB_totwc_1_0xe720e70", 0, 255)
-add_scroll_target(8, "VB_totwc_1_0xe6de5d0", 0, 255)
-add_scroll_target(9, "VB_totwc_1_0xe6de5d0", 0, 255)
-add_scroll_target(10, "VB_totwc_1_0xe721a70", 0, 255)
--- Could not find scrolling texture with ID 1
+add_scroll_target(0, "VB_cotmc_1_0xe019a10", 0, 15) -- Start VB
+add_scroll_target(0, "VB_cotmc_1_0xe019b00", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe019bf0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe019ce0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe019dd0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe019ec0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe019fb0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a0a0", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a190", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a280", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a370", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a460", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a550", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a640", 0, 15)
+add_scroll_target(0, "VB_cotmc_1_0xe01a730", 0, 15)
 
--- Could not find scrolling texture with ID 2
+--wf
+add_scroll_target(1, "VB_wf_1_0xe032550", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032640", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032730", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032820", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032910", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032a00", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032af0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032be0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032cd0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032dc0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032eb0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe032fa0", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033090", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe03318", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033270", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033360", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033450", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033540", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033630", 0, 15)
+add_scroll_target(1, "VB_wf_1_0xe033720", 0, 15)
 
--- Could not find scrolling texture with ID 3
+add_scroll_target(2, "VB_wf_1_0xe098580", 0, 15)
+add_scroll_target(2, "VB_wf_1_0xe098670", 0, 15)
+add_scroll_target(2, "VB_wf_1_0xe098490", 0, 15)
 
--- Could not find scrolling texture with ID 4
 
--- Could not find scrolling texture with ID 5
+add_scroll_target(3, "VB_wf_1_0xe02fb20", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fc10", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fd00", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fdf0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fee0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02ffd0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe0300c0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe0301b0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe0302a0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030390", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030480", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030570", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030660", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030750", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030840", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030930", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030a20", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030b10", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030c00", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030cf0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030de0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030ed0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe030fc0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe0310b0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe0311a0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031290", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031380", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031470", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031560", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031650", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031740", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031830", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031920", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031a10", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031b00", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031bf0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe031ce0", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fa30", 0, 15)
 
--- Could not find scrolling texture with ID 6
 
--- Could not find scrolling texture with ID 7
+add_scroll_target(4, "VB_wf_1_0xe031dd0", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe031ec0", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe031fb0", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe0320a0", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe032190", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe032280", 0, 15)
+add_scroll_target(4, "VB_wf_1_0xe02fa30", 0, 15)
 
--- Could not find scrolling texture with ID 8
+
 
