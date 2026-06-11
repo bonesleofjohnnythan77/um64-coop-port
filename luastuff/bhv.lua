@@ -5,6 +5,7 @@
 ---@param o Object
 function bhv_brick_init(o)
     obj_set_model_extended(o, E_MODEL_BRICK_BLOCK)
+    network_init_object(o, true, nil)
 end
 
 ---@param o Object
