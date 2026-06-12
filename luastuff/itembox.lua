@@ -181,7 +181,6 @@ local function spawn_content(parent, model, behavior, first_byte, second_byte, n
     end
 
     obj.oBehParams = obj.oBehParams | (second_byte << 16)
-    parent.oBehParams = obj.oBehParams
 
     return obj
 end
@@ -227,6 +226,11 @@ local function exclamation_box_spawn_contents(exclamation_box_obj, desired_index
             spawned_object = spawn_content(exclamation_box_obj, model, value[5], value[3], value[2], nearest_mario_object)
             if not spawned_object then
                 return false
+            end
+
+            if is_current_area_sync_valid() then
+                network_init_object(spawned_object, false, { "oBehParams" })
+                network_send_object(spawned_object, true)
             end
             break
         end
@@ -426,7 +430,7 @@ local function obj_call_action_function(obj, actionFunctions)
 end
 
 --- @param obj Object
-local function bhv_custom_exclamation_box_init(obj)
+function bhv_custom_exclamation_box_init(obj)
     obj.oFlags = (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)
     obj.collisionData = gGlobalObjectCollisionData.exclamation_box_outline_seg8_collision_08025F78
     obj.oCollisionDistance = 300
@@ -442,18 +446,11 @@ local function bhv_custom_exclamation_box_init(obj)
 end
 
 --- @param obj Object
-local function bhv_custom_exclamation_box_loop(obj)
+function bhv_custom_exclamation_box_loop(obj)
     cur_obj_scale(2.75)
     obj_call_action_function(obj, sExclamationBoxActions)
 end
 
 id_bhvExclamationBox = hook_behavior(id_bhvExclamationBox, OBJ_LIST_SURFACE, true, bhv_custom_exclamation_box_init, bhv_custom_exclamation_box_loop, "bhvExclamationBox")
 
--- Hooking the star directly might break something can't really do anything about it
----@param obj Object
-local function bhv_custom_spawned_star_loop(obj)
-    obj.oBehParams = obj.parentObj.oBehParams
-    obj_set_model_extended(obj, ((1 << (obj.oBehParams >> 24)) & save_file_get_star_flags(get_current_save_file_num() - 1, gNetworkPlayers[0].currCourseNum - 1) ~= 0) and E_MODEL_TRANSPARENT_STAR or E_MODEL_STAR)
-end
 
-id_bhvSpawnedStar = hook_behavior(id_bhvSpawnedStar, OBJ_LIST_GENACTOR, false, nil, bhv_custom_spawned_star_loop, "bhvSpawnedStar")

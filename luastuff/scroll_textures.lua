@@ -38,7 +38,7 @@ add_scroll_target(1, "VB_wf_1_0xe033720", 0, 15)
 
 add_scroll_target(2, "VB_wf_1_0xe098580", 0, 15)
 add_scroll_target(2, "VB_wf_1_0xe098670", 0, 15)
-add_scroll_target(2, "VB_wf_1_0xe098490", 0, 15)
+add_scroll_target(2, "VB_wf_1_0xe098490", 3, 15)
 
 
 add_scroll_target(3, "VB_wf_1_0xe02fb20", 0, 15)
@@ -78,7 +78,7 @@ add_scroll_target(3, "VB_wf_1_0xe031a10", 0, 15)
 add_scroll_target(3, "VB_wf_1_0xe031b00", 0, 15)
 add_scroll_target(3, "VB_wf_1_0xe031bf0", 0, 15)
 add_scroll_target(3, "VB_wf_1_0xe031ce0", 0, 15)
-add_scroll_target(3, "VB_wf_1_0xe02fa30", 0, 15)
+add_scroll_target(3, "VB_wf_1_0xe02fa30", 3, 15)
 
 
 add_scroll_target(4, "VB_wf_1_0xe031dd0", 0, 15)
@@ -89,7 +89,7 @@ add_scroll_target(4, "VB_wf_1_0xe032190", 0, 15)
 add_scroll_target(4, "VB_wf_1_0xe032280", 0, 15)
 add_scroll_target(4, "VB_wf_1_0xe02fa30", 0, 15)
 
-add_scroll_target(5, "VB_totwc_1_0xe0f0210", 0, 15)
+add_scroll_target(5, "VB_totwc_1_0xe0f0210", 6, 15)
 add_scroll_target(5, "VB_totwc_1_0xe0f0300", 0, 15)
 add_scroll_target(5, "VB_totwc_1_0xe0f03f0", 0, 15)
 add_scroll_target(5, "VB_totwc_1_0xe0f04e0", 0, 15)
@@ -132,7 +132,7 @@ add_scroll_target(7, "VB_totwc_1_0xe0f16b0", 0, 15)
 add_scroll_target(7, "VB_totwc_1_0xe0f17a0", 0, 15)
 add_scroll_target(7, "VB_totwc_1_0xe0f1890", 0, 15)
 add_scroll_target(7, "VB_totwc_1_0xe0f1980", 0, 15)
-add_scroll_target(7, "VB_totwc_1_0xe0f0210", 0, 15)
+add_scroll_target(7, "VB_totwc_1_0xe0f0210", 6, 15)
 
 add_scroll_target(8, "VB_totwc_1_0xe0ae540", 0, 15)
 add_scroll_target(8, "VB_totwc_1_0xe0ae630", 0, 15)

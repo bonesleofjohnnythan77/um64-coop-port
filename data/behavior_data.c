@@ -91,6 +91,7 @@ const BehaviorScript bhvWfRotatingWoodenPlatform[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvWfRotatingWoodenPlatform),
 OR_INT(oFlags,1),
+CALL_NATIVE( init_object),
 LOAD_COLLISION_DATA(wc_platform_collision),
 BEGIN_LOOP(),
 CALL_NATIVE( bhv_wf_rotating_wooden_platform_loop),
@@ -230,6 +231,7 @@ const BehaviorScript bhvSquarishPathMoving[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvSquarishPathMoving),
 OR_INT(oFlags,1),
+CALL_NATIVE( init_object),
 LOAD_COLLISION_DATA(crystal_platform_collision),
 SET_HOME(),
 BEGIN_LOOP(),
@@ -366,6 +368,7 @@ const BehaviorScript bhvLllSinkingRockBlock[] = {
 BEGIN(OBJ_LIST_SURFACE),
 ID(id_bhvLllSinkingRockBlock)
 OR_INT(oFlags,9),
+CALL_NATIVE( init_object),
 LOAD_COLLISION_DATA(metal_box_seg8_collision_08024C28),
 SCALE(0,160),
 SET_HOME(),

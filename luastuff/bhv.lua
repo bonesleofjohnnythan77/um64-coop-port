@@ -1,4 +1,7 @@
 --Custom Behaviors
+function init_object(o)
+    network_init_object(o, true, nil)
+end
 
 --Progression Blocks
 
@@ -219,6 +222,7 @@ function Func_Custom_0x802c2b4c(o)
     local m = nearest_mario_state_to_object(o)
     local strength = o.oBehParams2ndByte
     local speed = 64
+    if not m then return end
 
     if cur_obj_is_mario_on_platform() == 1 and not is_bubbled(m) then
         set_mario_action(m, ACT_DOUBLE_JUMP, 1)
@@ -226,7 +230,7 @@ function Func_Custom_0x802c2b4c(o)
 
 
         if (m.controller.buttonDown & A_BUTTON) ~= 0 then
-            spawn_non_sync_object(
+            spawn_sync_object(
                 id_bhvHorStarParticleSpawner,
                 E_MODEL_NONE,
                 m.pos.x, m.pos.y, m.pos.z,
