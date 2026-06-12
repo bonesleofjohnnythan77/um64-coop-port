@@ -224,13 +224,13 @@ function Func_Custom_0x802c2b4c(o)
     local speed = 64
     if not m then return end
 
-    if cur_obj_is_mario_on_platform() == 1 and not is_bubbled(m) then
+    if cur_obj_is_any_player_on_platform() == 1 and not is_bubbled(m) then
         set_mario_action(m, ACT_DOUBLE_JUMP, 1)
         m.vel.y = speed
 
 
         if (m.controller.buttonDown & A_BUTTON) ~= 0 then
-            spawn_sync_object(
+            spawn_non_sync_object(
                 id_bhvHorStarParticleSpawner,
                 E_MODEL_NONE,
                 m.pos.x, m.pos.y, m.pos.z,
@@ -336,6 +336,7 @@ end
 function bhv_poundable_switch_starspawn_loop(o)
     local switch_amount = obj_count_objects_with_behavior_id(id_bhvChainChompGate)
     local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
+    if not switch then return end
 
     if o.oBehParams2ndByte == 10 then
     switch_amount = obj_count_objects_with_behavior_id(Bhv_Custom_0x130017b8)
