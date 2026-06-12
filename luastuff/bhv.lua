@@ -176,9 +176,9 @@ function coin_spawner_update(o)
     if not (o.oAction > 0) then
         if obj_check_hitbox_overlap(m.marioObj, o) then
             if o.oBehParams2ndByte ~= 1 then
-                spawn_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_non_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             else
-                spawn_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_non_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             end
             o.oAction = 1
             cur_obj_become_intangible()
@@ -254,10 +254,16 @@ end)
 function bhv_poundable_switch_init(o)
     obj_set_model_extended(o, E_MODEL_POUNDABLE_SWITCH_BLUE)
     network_init_object(o, false, { "oAction", })
+    o.oAction = 0
 end
 
 function bhv_poundable_switch_loop(o)
     local m = nearest_mario_state_to_object(o)
+
+    if star_spawned == true then
+        o.oAction = 2
+        network_send_object(o, true)
+    end
 
     if o.oAction == 0 then
         if m and cur_obj_was_attacked_or_ground_pounded() ~= 0 then
@@ -267,9 +273,10 @@ function bhv_poundable_switch_loop(o)
         end
     end
 
-    if o.oAction == 1 then
+    if o.oAction >= 1 and o.oAction <= 3 then
         obj_set_model_extended(o, E_MODEL_POUNDABLE_SWITCH_YELLOW)
     end
+
 end
 
 
@@ -291,9 +298,6 @@ function bhv_solid_stepblock_loop(o)
     if star_spawned == true then
         o.oAction = 2
         o.oTimer = 0
-        if o.oAction == 2 then
-            obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
-        end
         network_send_object(o, true)
     else
         if o.oAction == 0 then
@@ -316,6 +320,9 @@ function bhv_solid_stepblock_loop(o)
         end
     end
 
+    if o.oAction == 2 then
+        obj_set_model_extended(o, E_MODEL_SOLID_STEPBLOCK)
+    end
 
 
 
@@ -331,12 +338,12 @@ end
 function bhv_poundable_switch_starspawn_init(o)
     o.oFlags = OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE
     o.oHealth = 0
+    network_init_object(o, true, {"oHealth", "oHiddenStarTriggerCounter"})
 end
 
 function bhv_poundable_switch_starspawn_loop(o)
     local switch_amount = obj_count_objects_with_behavior_id(id_bhvChainChompGate)
     local switch = obj_get_first_with_behavior_id(id_bhvChainChompGate)
-    if not switch then return end
 
     if o.oBehParams2ndByte == 10 then
     switch_amount = obj_count_objects_with_behavior_id(Bhv_Custom_0x130017b8)
@@ -356,8 +363,9 @@ function bhv_poundable_switch_starspawn_loop(o)
 
     while switch do
         if switch.oAction == 1 then
+           if not o then return end 
            o.oHiddenStarTriggerCounter = o.oHiddenStarTriggerCounter + 1
-           network_send_object(o, true)
+           --network_send_object(o, true)
         end
         switch = obj_get_next_with_same_behavior_id(switch)
     end
@@ -369,17 +377,20 @@ function bhv_poundable_switch_starspawn_loop(o)
     end
     --djui_chat_message_create("spawner:" .. o.oHiddenStarTriggerCounter)
 end
-
+ --[[
 hook_event(HOOK_ON_OBJECT_UNLOAD,
 ---@param o Object
 function (o)
     -- Force spawn star for newly entering players
     if obj_has_behavior_id(o, id_bhvBulletBill) == 1 and o.oHiddenStarTriggerCounter ~= o.oHealth and not star_spawned then
+        local starspawn_obj = obj_get_first_with_behavior_id(id_bhvBulletBill)
+        if not starspawn_obj then return end
         star_spawned = true
+        spawn_red_coin_cutscene_star(starspawn_obj.oPosX, starspawn_obj.oPosY, starspawn_obj.oPosZ)
         --djui_chat_message_create("test")
     end
 end)
-
+]]--
 
 hook_event(HOOK_UPDATE, function()
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
