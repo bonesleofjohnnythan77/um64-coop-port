@@ -176,9 +176,9 @@ function coin_spawner_update(o)
     if not (o.oAction > 0) then
         if obj_check_hitbox_overlap(m.marioObj, o) then
             if o.oBehParams2ndByte ~= 1 then
-                spawn_non_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_sync_object(id_bhvThreeCoinsSpawn, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             else
-                spawn_non_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
+                spawn_sync_object(id_bhvSingleCoinGetsSpawned, E_MODEL_YELLOW_COIN, o.oPosX, o.oPosY, o.oPosZ, nil)
             end
             o.oAction = 1
             cur_obj_become_intangible()
@@ -396,6 +396,7 @@ hook_event(HOOK_UPDATE, function()
     for_each_object_with_behavior(bhvSMSRYoshiMessage, yoshi_star)
     for_each_object_with_behavior(bhvKoopaRaceEndpoint, yoshi_star)
     for_each_object_with_behavior(id_bhvSquarishPathMoving, set_model)
+    for_each_object_with_behavior(id_bhvHidden1up, init_object)
     for_each_object_with_behavior(id_bhvSunkenShipPart, function (o)
        o.header.gfx.skipInViewCheck = true
     end)
