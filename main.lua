@@ -1,5 +1,5 @@
--- name: Ultra Mario 64 Demo
--- description: 
+-- name: \\#FE3B33\\Ultra\\#4058E8\\ Mario\\#1AC323\\ 64\\#F7F649\\ Demo
+-- description: One of the first romhacks to utilize vertex lighting, featuring beautiful looking levels, dynamic lighting for Mario in certain areas, and an entirely original soundtrack composed for this hack by the author.\nThis demo has only 16 stars total.\n\nHack created by: nutta/nutta64\n\nPorted by: B. Bones Johnson\n\nAudio Stream Template and Act Select Template by: Blocky.cmd
 -- incompatible: romhack
 
 require("luastuff/utils")
