@@ -25,6 +25,8 @@ E_MODEL_POUNDABLE_SWITCH_BLUE = smlua_model_util_get_id("poundable_switch_blue_g
 E_MODEL_POUNDABLE_SWITCH_YELLOW = smlua_model_util_get_id("poundable_switch_yellow_geo")
 E_MODEL_SOLID_STEPBLOCK = smlua_model_util_get_id("solid_stepblock_geo")
 E_MODEL_TRANSPARENT_STEPBLOCK = smlua_model_util_get_id("transparent_stepblock_geo")
+E_MODEL_RETRO_SPRITES = smlua_model_util_get_id("retro_sprites_geo")
+
 
 COL_SOLID_STEPBLOCK = smlua_collision_util_get("solid_stepblock_collision")
 COL_POUNDABLE_SWITCH_BLUE = smlua_collision_util_get("poundable_switch_blue_collision")
