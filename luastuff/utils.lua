@@ -107,6 +107,12 @@ end
 
 --spawn 100 coin star in non main levels.
 
+local levelTable = {
+    [LEVEL_TOTWC] = true,
+    [LEVEL_PSS] = true,
+    [LEVEL_COTMC] = true
+}
+
 local prev_numCoins = 0
 
 hook_event(HOOK_ALLOW_INTERACT, function(m, obj, inter_type)
@@ -125,7 +131,8 @@ hook_event(HOOK_ON_INTERACT, function(m, obj, inter_type, value)
         if inter_type == INTERACT_COIN then
             local numcoins = m.numCoins
             local required = gLevelValues.coinsRequiredForCoinStar
-            if np.currLevelNum == LEVEL_TOTWC or np.currLevelNum == LEVEL_PSS or np.currLevelNum == LEVEL_COTMC then
+            if levelTable[np.currLevelNum] then
+                --djui_chat_message_create("yes spawn")
                 if numcoins >= required and prev_numCoins < required then
                 --if m.controller.buttonDown & X_BUTTON ~= 0 then --debug
                     bhv_spawn_star_no_level_exit(m.marioObj, 6, 1)

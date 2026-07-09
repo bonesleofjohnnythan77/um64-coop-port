@@ -322,8 +322,8 @@ local function on_hud_render() -- Handles the HUD layouts
         render_lives_segment(22, 210, 1, 1) -- Lives Segment positioning
         render_coins_segment(screenWidth - 76, 210, 1, 1) -- Coins Segment positioning
         render_stars_segment(22, 15, 1, 1) -- Stars Segment positioning
-        render_silver_stars(200, 15, 1, 1) -- Silver Stars positioning
-        render_red_coins_segment(screenWidth - 170, 210, 1, 1)
+        render_silver_stars(screenWidth - 106, 15, 1, 1) -- Silver Stars positioning
+        render_red_coins_segment(screenWidth / 2.13, 210, 1, 1)
         render_power_meter(halfScreenWidth - 51, 9, 65, 65) -- scale 65 for default power meter, though you might need to change it to a scale of 1 for custom textures
         --render_cap_timer(math.ceil(gMarioStates[0].capTimer/30), 22, 35) -- Cap Timer positioning
         if newTimer then
